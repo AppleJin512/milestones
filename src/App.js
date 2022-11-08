@@ -1,6 +1,5 @@
 import ImageBar from "./components/ImageBar";
 import Header from "./components/Header";
-import ChattingBox from "./components/chttingBox";
 import PageRocket from "./components/pageRocket";
 import StatisticsBar from "./components/StatisticsBar";
 import Footer from './components/footer';
@@ -31,7 +30,6 @@ function App() {
       <StatisticsBar />
       <Footer />
       <PageRocket />
-      <ChattingBox />
     </ThemeProvider>
   );
 }

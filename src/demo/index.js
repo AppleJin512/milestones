@@ -4,3 +4,4 @@ export const FooterMenuData = [
     { id: 3, footer_subheader: 'Help', footer_menu_item1: 'FAQ', footer_menu_item2: 'Shipping & Returns', footer_menu_item3: 'Store Policy', footer_menu_item4: 'Payment Methods', footer_menu_item5: '' },
     { id: 4, footer_subheader: 'Socials', footer_menu_item1: 'Facebook', footer_menu_item2: 'Twitter', footer_menu_item3: 'Instagram', footer_menu_item4: 'Pinterest', footer_menu_item5: '' },
 ]
+

@@ -288,13 +288,15 @@ const styles = (theme) => {
     },
     StatisticsBar: {
       backgroundImage: 'url(/images/map.jpg)',
-      paddingTop: 70,
+      paddingTop: 65,
+      backgroundRepeat: 'round'
     },
     StatisticsTitileBar: {
       textAlign: 'center',
       color: '#0c0145',
       textTransform: 'uppercase',
       fontSize: '36px !important',
+      padding: '30px 0px',
     },
     svgIcon: {
       fill: '#0c0145',
@@ -423,56 +425,95 @@ const styles = (theme) => {
       }),
     },
     footer: {
-      backgroundImage: 'url(https://static.wixstatic.com/media/82fcd3_2caf6bff17514f349c52c29d69f37e61~mv2.jpg/v1/fill/w_1583,h_466,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/82fcd3_2caf6bff17514f349c52c29d69f37e61~mv2.jpg)',
+      backgroundColor: '#181818',
     },
     footer_menu_box: {
       color: '#fff',
-      padding: '80px 80px 0px 80px',
+      padding: '70px 100px 50px 100px',
       [theme.breakpoints.down('sm')]: {
-        padding: '40px 40px 0px 40px',
-      },
-    },
-    footer_subheader: {
-      paddingBottom: 50,
-      fontWeight: '600 !important',
-      [theme.breakpoints.down('sm')]: {
-        paddingBottom: 20,
+        padding: '35px 20px 0px 20px',
       },
     },
     footer_menu_item: {
-      paddingBottom: 30,
+      paddingBottom: 10,
       fontSize: 14,
-      fontWeight: '200 !important',
+      fontWeight: '300 !important',
+    },
+    footer_form_box:{
       [theme.breakpoints.down('sm')]: {
-        paddingBottom: 10,
+        
       },
     },
     footer_input: {
-      width: '100%',
-      height: 33,
-      border: '5px solid #DB163A !important',
+      width: '68%',
+      height: 38,
+      border: 'none',
+      borderBottom: '2px solid #fff !important',
       background: 'transparent',
-      paddingLeft: 20,
-      paddingRight: 20,
+      paddingLeft: 10,
+      paddingRight: 10,
       color: '#fff',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
+      '& ::placeholder': {
+        color: '#fff',
+      },
       '&:focus': {
         outline: 'none',
+        borderBottom: '3px solid #D32F2F !important',
       },
     },
-    footer_divider: {
-      borderColor: '#fff !important',
-      margin: '30px 80px !important',
+    subscribe_button: {
+      position: 'absolute !important',
+      right: '0px',
+      padding: '0px 15px 0px 15px',
+      height: 40,
+      color: '#181818 !important',
+      fontWeight: '300 !important',
+      fontSize: '15px !important',
+      backgroundColor: '#fff !important',
+      borderRadius: '0 !important',
       [theme.breakpoints.down('sm')]: {
-        margin: '30px 40px',
+        width: '100%',
+        top: 65,
+        right: 0,
       },
+      '&:hover': {
+        backgroundColor: '#181818 !important',
+        color: '#fff !important',
+        border: '1px solid #fff !important',
+      },
+    },
+    footer_input_label: {
+      fontSize: '15px !important',
+      fontWeight: '200 !important',
     },
     footer_index: {
+      backgroundColor: '#2E2D2D',
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
+    },
+    footer_index_text: {
       color: '#fff',
-      textAlign: 'center',
-      paddingTop: 30,
-      paddingBottom: 30,
-      fontSize: '13px !important',
+      padding: '15px 100px',
+      fontSize: '12px !important',
       fontWeight: '200 !important',
+    },
+    footer_link_bar: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      paddingTop: 35,
+      paddingBottom: 20,
+      [theme.breakpoints.down('sm')]: {
+        justifyContent: 'center',
+        paddingTop: 80,
+        paddingBottom: 20,
+      },
+      '& p': {
+        marginLeft: 12,
+      },
     },
   };
 };
