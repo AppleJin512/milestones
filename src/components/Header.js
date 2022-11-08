@@ -155,7 +155,7 @@ const Header = (props) => {
     <Box sx={{ marginBottom: '80px' }}>
       <ElevationScroll {...props}>
         <AppBar className={classes.navBar}>
-          <Container className={classes.headerContainer}>
+          <Container className={classes.headerContainer} maxWidth="xl">
 
             <Hidden mdDown>
               <Toolbar className={classes.toolBar}>

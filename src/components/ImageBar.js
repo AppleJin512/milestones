@@ -45,7 +45,7 @@ const ImageBar = (props) => {
 
   return (
     <Box className={classes.imageBar}>
-      <Container className={classes.generalContainer}>
+      <Container className={classes.generalContainer} maxWidth="xl">
         <Box>
           <ImageCard
             TextBoxClassName={classes.TextBox1}

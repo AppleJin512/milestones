@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import ChattingBox from "./components/chttingBox";
 import PageRocket from "./components/pageRocket";
 import StatisticsBar from "./components/StatisticsBar";
+import Footer from './components/footer';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -19,18 +20,19 @@ const theme = createTheme({
   },});
 
 function App() {
-  return (
-    <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Header />
-        <ImageBar />
-        <StatisticsBar />
-        <PageRocket />
-        <ChattingBox />
-      </ThemeProvider>
-    </>
 
+  // const classes = useStyles();
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Header />
+      <ImageBar />
+      <StatisticsBar />
+      <Footer />
+      <PageRocket />
+      <ChattingBox />
+    </ThemeProvider>
   );
 }
 

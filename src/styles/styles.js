@@ -2,9 +2,6 @@ import { makeStyles } from '@mui/styles';
 
 const styles = (theme) => {
   return {
-    root: {
-
-    },
     navBar: {
       backgroundColor: 'white !important',
       paddingLeft: '0 !important',
@@ -12,14 +9,19 @@ const styles = (theme) => {
       boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%) !important',
     },
     generalContainer: {
-      maxWidth: '1423px !important',
-      paddingLeft: '0 !important',
-      paddingRight: '0 !important',
+      paddingLeft: '56px !important',
+      paddingRight: '56px !important',
+      [theme.breakpoints.down('md')]: {
+        paddingLeft: '0px !important',
+        paddingRight: '0px !important',
+      },
     },
     headerContainer: {
-      maxWidth: '100% !important',
-      paddingLeft: '0 !important',
+      paddingLeft: '56px !important',
       paddingRight: '0 !important',
+       [theme.breakpoints.down('md')]: {
+        paddingLeft: '0 !important',
+      },
     },
     toolBar: {
       height: 80,
@@ -36,10 +38,6 @@ const styles = (theme) => {
       alignItems: 'center',
       justifyContent: 'center',
       width: '261px !important',
-      marginLeft: '80px !important',
-      [theme.breakpoints.between('xl', 'lg')]: {
-        marginLeft: '0px !important',
-      },
     },
     resposiveLogoBox: {
       height: 80,
@@ -53,8 +51,8 @@ const styles = (theme) => {
         paddingRight: 20,
       },
       [theme.breakpoints.down('sm')]: {
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
       },
     },
     logoImage: {
@@ -134,6 +132,11 @@ const styles = (theme) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    imageBar:{
+      '& img': {
+        width: '100% !important'
+      },
     },
     cartValue: {
       color: 'white',
@@ -297,6 +300,13 @@ const styles = (theme) => {
       fill: '#0c0145',
       height: 49,
     },
+    statisticsInfoHeader: {
+      textAlign: 'center',
+      color: '#0c0145',
+      paddingTop: 19,
+      paddingBottom: 19,
+      fontWeight: '600 !important',
+    },
     statisticsInfo: {
       color: '#0c0145',
       textAlign: 'center',
@@ -337,6 +347,31 @@ const styles = (theme) => {
       outline: 'none',
       width: '100%',
       padding: 10,
+    },
+    emojiIcon: {
+      '&:hover': {
+        color: '#0C0145',
+      },
+    },
+    fileIcon: {
+      width: 50,
+      height: 50,
+      padding: 0,
+      '&:hover': {
+        color: '#0C0145',
+      },
+    },
+    file_input_label: {
+      position: 'relative',
+      width: 50,
+      height: 50,
+      display: 'flex',
+      alignItems: 'center',
+    },
+    file_input: {
+      display: 'none',
+      position: 'absolute',
+      cursor: 'pointer !important',
     },
     statusDot: {
       width: 10,
@@ -386,6 +421,58 @@ const styles = (theme) => {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+    },
+    footer: {
+      backgroundImage: 'url(https://static.wixstatic.com/media/82fcd3_2caf6bff17514f349c52c29d69f37e61~mv2.jpg/v1/fill/w_1583,h_466,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/82fcd3_2caf6bff17514f349c52c29d69f37e61~mv2.jpg)',
+    },
+    footer_menu_box: {
+      color: '#fff',
+      padding: '80px 80px 0px 80px',
+      [theme.breakpoints.down('sm')]: {
+        padding: '40px 40px 0px 40px',
+      },
+    },
+    footer_subheader: {
+      paddingBottom: 50,
+      fontWeight: '600 !important',
+      [theme.breakpoints.down('sm')]: {
+        paddingBottom: 20,
+      },
+    },
+    footer_menu_item: {
+      paddingBottom: 30,
+      fontSize: 14,
+      fontWeight: '200 !important',
+      [theme.breakpoints.down('sm')]: {
+        paddingBottom: 10,
+      },
+    },
+    footer_input: {
+      width: '100%',
+      height: 33,
+      border: '5px solid #DB163A !important',
+      background: 'transparent',
+      paddingLeft: 20,
+      paddingRight: 20,
+      color: '#fff',
+      '&:focus': {
+        outline: 'none',
+      },
+    },
+    footer_divider: {
+      borderColor: '#fff !important',
+      margin: '30px 80px !important',
+      [theme.breakpoints.down('sm')]: {
+        margin: '30px 40px',
+      },
+    },
+    footer_index: {
+      color: '#fff',
+      textAlign: 'center',
+      paddingTop: 30,
+      paddingBottom: 30,
+      fontSize: '13px !important',
+      fontWeight: '200 !important',
     },
   };
 };

@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
-import { Typography, Box, IconButton, Container, Grid, Card, CardContent, Hidden, Avatar, Slide } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Typography, Box, IconButton, Container, Grid, Card, CardContent, Hidden, Avatar, Slide, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
+import EmojiPicker from 'emoji-picker-react';
 import useStyles from '../styles/styles';
 
 export default function ChattingBox() {
 
-    const [ showChattingCard, setShowChattingCard ] = React.useState(false);
-    const [ showChattingAvatar, setShowChattingAvatar ] = React.useState(false);
+    const [ showChattingCard, setShowChattingCard ] = useState(false);
+    const [ showChattingAvatar, setShowChattingAvatar ] = useState(false);
+    const [ showEmojiBox, setShowEmojiBox ] = useState(false);
+    const [ textContent, setTextContent ] = useState('');
 
     const openChattinCard = () => {
         setShowChattingCard(true);
@@ -17,6 +20,20 @@ export default function ChattingBox() {
 
     const closeChattingCard = () => {
         setShowChattingCard(false);
+    }
+
+    const openEmojiPicker = () => {
+        setShowEmojiBox(!showEmojiBox);
+    }
+
+    const pickEmojiHandle = (e, emojiObject) => {
+        let temp_text = textContent;
+        temp_text += emojiObject.emoji;
+        setTextContent(temp_text);
+    }
+
+    const handleInputText = (e) => {
+        setTextContent(e.target.value);
     }
 
     useEffect(()=>{
@@ -27,8 +44,8 @@ export default function ChattingBox() {
                 if(showChattingAvatar) setShowChattingAvatar(false);
             }
         });
-    }, [showChattingAvatar])
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showEmojiBox])
 
     const classes = useStyles();
 
@@ -74,21 +91,49 @@ export default function ChattingBox() {
                                 </Grid>
                             </Container>
                             <Box className={classes.chattingHistoryBox}></Box>
-                            <Box>
+                            {showEmojiBox && ( <EmojiPicker height={400} onEmojiClick={pickEmojiHandle} /> )}    
+                            <form>
                                 <Grid container>
                                     <Grid item xs={8}>
-                                        <textarea className={classes.textField} name="text" rows={2} placeholder='Type your message...' ></textarea>
+                                        <Box
+                                            component="div"
+                                            sx={{
+                                                height: '100%',
+                                                '& .MuiTextField-root': { width: '24ch', height: '100%' },
+                                                '& .MuiInput-root': { height: '100%', margin: '5px', paddingLeft: 1 },
+                                            }}
+                                            noValidate
+                                            autoComplete="off"
+                                        >
+                                            <TextField
+                                                id="standard-multiline-static"
+                                                multiline
+                                                placeholder='Type your message...'
+                                                variant="standard"
+                                                value={textContent}
+                                                onChange={handleInputText}
+                                            />
+                                        </Box>
                                     </Grid>
                                     <Grid item xs={4} style={{display: 'flex', justifyContent: 'flex-end'}}>
-                                        <IconButton aria-label="delete" size="large">
+                                        <IconButton aria-label="delete" size="large" onClick={openEmojiPicker} className={classes.emojiIcon}>
                                             <EmojiEmotionsOutlinedIcon fontSize="inherit" />
                                         </IconButton>
-                                        <IconButton aria-label="delete" size="large">
-                                            <AttachFileOutlinedIcon fontSize="inherit" sx={{ transform: 'rotate(45deg)'}}/>
+                                        <IconButton aria-label="delete" size="large" className={classes.fileIcon} >
+                                            <label htmlFor="contained-button-file" className={classes.file_input_label}>
+                                                <input
+                                                    accept="image/*"
+                                                    id="contained-button-file"
+                                                    multiple
+                                                    type="file"
+                                                    className={classes.file_input}
+                                                />
+                                                <AttachFileOutlinedIcon fontSize="inherit" sx={{ transform: 'rotate(45deg)'}}/>
+                                            </label>
                                         </IconButton>
                                     </Grid>
                                 </Grid>
-                            </Box>
+                            </form>
                         </CardContent>
                     </Card>                   
                 </Slide>

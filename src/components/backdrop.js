@@ -6,8 +6,8 @@ export default function PageBackdrop(props) {
 
   return (
     <Backdrop
-    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-    open={props.openBackdrop}
+      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open={props.openBackdrop}
     >
     <CircularProgress color="inherit" />
     </Backdrop>

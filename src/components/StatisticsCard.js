@@ -11,6 +11,7 @@ const StatisticsCard = (props) => {
             <Box style={{display: 'flex', justifyContent: 'center',}}>
                 {props.svg}
             </Box>
+            <Typography variant='body1' className={classes.statisticsInfoHeader}>{props.statisticsInfoHeader}</Typography>
             <Typography variant='body1' className={classes.statisticsInfo}>{props.statisticsInfo}</Typography>
         </Box>
     )
