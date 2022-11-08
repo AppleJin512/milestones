@@ -8,12 +8,15 @@ import storage from "../services/firebase"
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { useState } from 'react';
 import { useEffect } from 'react';
+import PageBackdrop from './backdrop';
 
 const ImageBar = (props) => {
 
   const [ image_urls, setImageUrls ] = useState([]);
+  const [ openBackdrop, setOpenBackdrop ] = useState(false);
 
   useEffect(() => {
+    setOpenBackdrop(true);
     const fileList = async (imageFileList) => {
       var getImgRef, imgRefList = [];
       const listRef = ref(storage, 'images/');
@@ -32,9 +35,10 @@ const ImageBar = (props) => {
           const imageUrl = await getDownloadURL(imageFileList[i]);
           imagesUrlArray.push(imageUrl);
       }
+      setOpenBackdrop(false);
       return imagesUrlArray;
     };
-    fileList()
+    fileList();
   }, [setImageUrls])
   
   const classes = useStyles();
@@ -83,6 +87,7 @@ const ImageBar = (props) => {
           </Grid>     
         </Box>
       </Container>
+      <PageBackdrop openBackdrop={openBackdrop} />
     </Box>
   );
 };
