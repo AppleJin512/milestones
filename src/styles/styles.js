@@ -443,11 +443,6 @@ const styles = (theme) => {
       fontSize: 14,
       fontWeight: '300 !important',
     },
-    // footer_form_box:{
-    //   [theme.breakpoints.down('sm')]: {
-        
-    //   },
-    // },
     footer_input: {
       width: '68%',
       height: 38,

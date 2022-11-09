@@ -52,11 +52,11 @@ export default function ImageBar(props) {
           <Grid container spacing={5}>
             {imageData.map((item, index) => {
               return (
-                <Grid item md={4} sm={12} key={index}>
+                <Grid item md={4} xs={12} key={index}>
                   <ImageCard
                     TextBoxClassName={classes.TextBox2}
                     ImageHeadingClassName={classes.ImageHeading2}
-                    ImageStyle={{width: '100%', height: 399}}
+                    ImageStyle={{height: 399}}
                     image_url={item.image_url}
                     ImageHeading={item.image_header}
                     ImageSubheading={item.image_subheader}
