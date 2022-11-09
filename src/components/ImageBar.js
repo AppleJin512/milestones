@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+// import Tiff from 'tiff.js';
+// import TiffImage from '../images/banner_pic.tiff';
 import { Container, Box, Grid, } from '@mui/material';
-import mainImage from '../images/mainImage.jpg';
-import Image4 from '../images/image4.jpg';
 import useStyles from '../styles/styles';
 import ImageCard from './ImageCard';
 import PageBackdrop from './backdrop';
@@ -12,8 +12,26 @@ export default function ImageBar(props) {
 
   const [ imageData, setImageData ] = useState([]);
   const [ openBackdrop, setOpenBackdrop ] = useState(false);
+  // var xhr = XMLHttpRequest();
+  // xhr.responsive = 'arraybuffer';
+  // xhr.open('GET', TiffImage);
 
-  
+  // xhr.onload = function(e) {
+  //   var arrayBuffer = this.responsive;
+  //   Tiff.initialize({
+  //     TOTAL_MEMORY : 16777216 * 10
+  //   });
+  //   console.log('arrayBuffer', arrayBuffer)
+  //   var tiff = new Tiff({
+  //     buffer : arrayBuffer
+  //   });
+
+  //   var data_url = tiff.toDataURL();
+  //   console.log('data_url', data_url)
+  //   document.getElementById("banner_pic").src = data_url;
+  // };
+  // xhr.send();
+
   const fetchPost = async () => {       
     await getDocs(collection(db, "milestones-test"))
       .then((querySnapshot)=>{             
@@ -24,8 +42,8 @@ export default function ImageBar(props) {
           setOpenBackdrop(false);
         })
       })
-   
     }
+
 
   useEffect(()=>{
     setOpenBackdrop(true);
@@ -42,10 +60,10 @@ export default function ImageBar(props) {
             TextBoxClassName={classes.TextBox1}
             ImageHeadingClassName={classes.ImageHeading1}
             ImageStyle={{width: '100%', height: 755}}
-            image_url={mainImage}
-            ImageHeading={"become one with nature"}
-            ImageSubheading={"Everything You need for the Perfect Travel Experience"}
-            ImageButtonName={"Shop Our Range"}
+            image_url={"http://localhost:3000/images/Celebrate.png"}
+            ImageHeading={"Celetrate the Milestones"}
+            ImageSubheading={"Memorabilia designed to hang in the family room"}
+            ImageButtonName={"Shop"}
           />
         </Box>
         <Box style={{paddingTop: 37}}>
@@ -70,9 +88,9 @@ export default function ImageBar(props) {
                 TextBoxClassName={classes.TextBox4}
                 ImageHeadingClassName={classes.ImageHeading2}
                 ImageStyle={{width: '100%', height: 399}}
-                image_url={Image4}
-                ImageHeading={"start planning your next adventure"}
-                ImageButtonName={"Contact Us"}
+                image_url={"http://localhost:3000/images/banner_pic.png"}
+                ImageHeading={"We know you have been grinding for years... So Celebrate"}
+                ImageButtonName={"Shop"}
               />
             </Grid>
           </Grid>     

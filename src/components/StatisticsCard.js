@@ -9,7 +9,7 @@ const StatisticsCard = (props) => {
     return (
         <Box style={{paddingTop: 25}}>
             <Box style={{display: 'flex', justifyContent: 'center',}}>
-                {props.svg}
+                <img src={"http://localhost:3000/images/icons/" + props.img_name} alt="icons" />
             </Box>
             <Typography variant='body1' className={classes.statisticsInfoHeader}>{props.statisticsInfoHeader}</Typography>
             <Typography variant='body1' className={classes.statisticsInfo}>{props.statisticsInfo}</Typography>

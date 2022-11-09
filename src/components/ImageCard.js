@@ -9,8 +9,7 @@ const ImageCard = (props) => {
     const classes = useStyles();
 
     const ColorButton = styled(Button)(({ theme }) => ({
-        color: theme.palette.getContrastText(red[700]),
-        backgroundColor: red[700],
+        backgroundColor: '#0c0145',
         borderRadius: 0,
         '&:hover': {
         backgroundColor: red[900],
@@ -30,7 +29,7 @@ const ImageCard = (props) => {
                     <div className={props.TextBoxClassName} >
                       <div className={props.ImageHeadingClassName}>{props.ImageHeading}</div>
                       <div className={classes.imageSubheadng}>{props.ImageSubheading}</div>
-                      <div style={{color: '#fff', fontSize: 20, paddingTop: 50}}><ColorButton variant="contained" style={{textTransform: 'none', padding: '0px 32px 0px 32px', height: 40}}>{props.ImageButtonName}</ColorButton></div>
+                      <div style={{color: '#fff', paddingTop: 50}}><ColorButton variant="contained" style={{textTransform: 'none', padding: '15px 130px', fontSize: 24}}>{props.ImageButtonName}</ColorButton></div>
                     </div>
                   </div>
                 </CardContent>

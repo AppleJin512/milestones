@@ -188,13 +188,12 @@ const styles = (theme) => {
       padding: '0 !important',
     },
     TextBox1: {
-      width: 297,
+      width: '31%',
       height: '100%',
       position: 'absolute', 
-      color: '#0c0145',
-      top: '10%', 
-      left: 220,
-      transform: 'translateX(-50%)',
+      color: '#fff',
+      top: '25%', 
+      left: '10%',
       textAlign: 'left',
       [theme.breakpoints.down('sm')]: {
         left: '175px !important',
@@ -276,10 +275,10 @@ const styles = (theme) => {
         fontSize: 23,
       },
     },
-    imageSubheading: {
-      fontSize: 18, 
+    imageSubheadng: {
+      fontSize: 24, 
       lineHeight: 1.5, 
-      paddingTop: 15,
+      paddingTop: 50,
       [theme.breakpoints.down('sm')]: {
         fontSize: 16,
       },
@@ -294,6 +293,10 @@ const styles = (theme) => {
       backgroundRepeat: 'round',
       backgroundPosition: 'center',
       backgroundSize: 'cover',
+      '& img': {
+        width: 64,
+        height: 64,
+      },
     },
     StatisticsTitileBar: {
       textAlign: 'center',
@@ -311,7 +314,7 @@ const styles = (theme) => {
       color: '#0c0145',
       paddingTop: 19,
       paddingBottom: 19,
-      fontWeight: '600 !important',
+      fontWeight: '700 !important',
     },
     statisticsInfo: {
       color: '#0c0145',
