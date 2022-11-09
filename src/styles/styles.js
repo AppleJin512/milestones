@@ -443,11 +443,11 @@ const styles = (theme) => {
       fontSize: 14,
       fontWeight: '300 !important',
     },
-    footer_form_box:{
-      [theme.breakpoints.down('sm')]: {
+    // footer_form_box:{
+    //   [theme.breakpoints.down('sm')]: {
         
-      },
-    },
+    //   },
+    // },
     footer_input: {
       width: '68%',
       height: 38,
@@ -478,6 +478,9 @@ const styles = (theme) => {
       fontSize: '15px !important',
       backgroundColor: '#fff !important',
       borderRadius: '0 !important',
+      [theme.breakpoints.only('md')]: {
+        right: -18
+      },
       [theme.breakpoints.down('sm')]: {
         width: '100%',
         top: 65,

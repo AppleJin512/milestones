@@ -25,7 +25,7 @@ export default function Footer() {
                             <Typography variant='body2' className={classes.footer_menu_item}>Store Policy</Typography>
                             <Typography variant='body2' className={classes.footer_menu_item}>payment Methods</Typography>
                         </Grid>
-                        <Grid item xl={5} lg={12} className={classes.footer_form_box}>
+                        <Grid item xl={5} md={5} className={classes.footer_form_box}>
                             <Box
                                 component="form"
                                 sx={{
