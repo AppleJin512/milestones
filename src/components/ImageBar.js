@@ -1,46 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Box, Grid, } from '@mui/material';
 import mainImage from '../images/mainImage.jpg';
 import Image4 from '../images/image4.jpg';
 import useStyles from '../styles/styles';
 import ImageCard from './ImageCard';
-import storage from "../services/firebase"
-import { ref, getDownloadURL, listAll } from "firebase/storage";
-import { useState } from 'react';
-import { useEffect } from 'react';
 import PageBackdrop from './backdrop';
+import { collection, getDocs } from "firebase/firestore";
+import {db} from '../services/firebase';
 
-const ImageBar = (props) => {
+export default function ImageBar(props) {
 
-  const [ image_urls, setImageUrls ] = useState([]);
+  const [ imageData, setImageData ] = useState([]);
   const [ openBackdrop, setOpenBackdrop ] = useState(false);
 
-  useEffect(() => {
-    setOpenBackdrop(true);
-    const fileList = async (imageFileList) => {
-      var getImgRef, imgRefList = [];
-      const listRef = ref(storage, 'images/');
-      const fileList =  await listAll(listRef);
-      fileList.items.forEach((itemRef) => {
-          getImgRef = ref(storage, itemRef.fullPath);
-          imgRefList.push(getImgRef)
-      })
-      const urls = await multiImage(imgRefList);
-      setImageUrls(urls);
-    };
-
-    const multiImage = async (imageFileList) => {
-      const imagesUrlArray = [];
-      for (let i = 0; i < imageFileList.length; i++) {
-          const imageUrl = await getDownloadURL(imageFileList[i]);
-          imagesUrlArray.push(imageUrl);
-      }
-      setOpenBackdrop(false);
-      return imagesUrlArray;
-    };
-    fileList();
-  }, [setImageUrls])
   
+  const fetchPost = async () => {       
+    await getDocs(collection(db, "milestones-test"))
+      .then((querySnapshot)=>{             
+        const newData = querySnapshot.docs
+          .map((doc) => ({...doc.data(), id:doc.id }));
+        newData.forEach((item) => {
+          setImageData(item.image_1);
+          setOpenBackdrop(false);
+        })
+      })
+   
+    }
+
+  useEffect(()=>{
+    setOpenBackdrop(true);
+    fetchPost();
+  }, [])
+
   const classes = useStyles();
 
   return (
@@ -59,17 +50,17 @@ const ImageBar = (props) => {
         </Box>
         <Box style={{paddingTop: 37}}>
           <Grid container spacing={5}>
-            {image_urls.map((item, index) => {
+            {imageData.map((item, index) => {
               return (
                 <Grid item md={4} sm={12} key={index}>
                   <ImageCard
                     TextBoxClassName={classes.TextBox2}
                     ImageHeadingClassName={classes.ImageHeading2}
                     ImageStyle={{width: '100%', height: 399}}
-                    image_url={item}
-                    ImageHeading={"get ready for the big chill"}
-                    ImageSubheading={"Our New Jackets and Vests Collection"}
-                    ImageButtonName={"Shop New Arrivals"}
+                    image_url={item.image_url}
+                    ImageHeading={item.image_header}
+                    ImageSubheading={item.image_subheader}
+                    ImageButtonName={item.image_button_name}
                   />
                 </Grid>
               )
@@ -90,6 +81,4 @@ const ImageBar = (props) => {
       <PageBackdrop openBackdrop={openBackdrop} />
     </Box>
   );
-};
-
-export default ImageBar;
+}

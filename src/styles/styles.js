@@ -158,7 +158,6 @@ const styles = (theme) => {
       position: 'absolute',
       left: 0,
       transition: 'all .25s ease-in-out',
-      // transform: 'translateY(10px) translateY(-50%) rotate(-45deg)',
     },
     drawerIcon2: {
       width: '100%',
@@ -181,7 +180,6 @@ const styles = (theme) => {
       left: 0,
       bottom: 0,
       transition: 'all .25s ease-in-out',
-      // transform: 'translateY(-10px) translateY(50%) rotate(45deg)',
     },
     card: {
       borderRadius: '0 !important',
@@ -211,6 +209,10 @@ const styles = (theme) => {
       transform: 'translateX(-50%)',
       textAlign: 'left',
       color: '#fff',
+      [theme.breakpoints.down('lg')]: {
+        width: 200,
+        left: '128px !important',
+      },
       [theme.breakpoints.down('sm')]: {
         width: 200,
         left: '128px !important',
@@ -287,9 +289,11 @@ const styles = (theme) => {
       padding: '10px 30px 10px 30px'
     },
     StatisticsBar: {
-      backgroundImage: 'url(/images/map.jpg)',
+      backgroundImage: 'url(https://static.wixstatic.com/media/82fcd3_7a9abf1cf93845128c7233ec2618ee98~mv2.jpg/v1/fill/w_1423,h_540,al_c,q_85,enc_auto/82fcd3_7a9abf1cf93845128c7233ec2618ee98~mv2.jpg)',
       paddingTop: 65,
-      backgroundRepeat: 'round'
+      backgroundRepeat: 'round',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
     },
     StatisticsTitileBar: {
       textAlign: 'center',
