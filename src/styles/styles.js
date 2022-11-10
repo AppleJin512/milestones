@@ -307,9 +307,9 @@ const styles = (theme) => {
       },
     },
     main_bar_button: {
-      textTransform: 'none', 
-      padding: '15px 130px !important', 
-      fontSize: 24,
+      padding: '15px 130px !important',
+      textTransform: 'none !important', 
+      fontSize: '22px !important',
       [theme.breakpoints.down('sm')]: {
         fontSize: 18,
         padding: '15px 80px !important', 

@@ -115,16 +115,6 @@ export default function ImageBar(props) {
               )
             })}
             <Grid item xs={12}>
-              {/* <ImageCard
-                TextBoxClassName={classes.TextBox1}
-                ImageHeadingClassName={classes.ImageHeading1}
-                ImageStyle={{width: '100%', height: 755}}
-                image_url={"http://localhost:3000/images/Celebrate.png"}
-                ImageHeading={"Celetrate the Milestones"}
-                ImageSubheading={"Memorabilia designed to hang in the family room"}
-                ImageButtonName={"Shop"}
-                buttonBoxClassName={classes.buttonBox}
-              /> */}
               <ImageCard
                 TextBoxClassName={classes.TextBox4}
                 ImageHeadingClassName={classes.ImageHeading4}
