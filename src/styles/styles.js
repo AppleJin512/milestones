@@ -134,9 +134,7 @@ const styles = (theme) => {
       justifyContent: 'center'
     },
     imageBar:{
-      '& img': {
-        width: '100% !important'
-      },
+      
     },
     cartValue: {
       color: 'white',
@@ -186,6 +184,70 @@ const styles = (theme) => {
     },
     content: {
       padding: '0 !important',
+      position: 'relative',
+    },
+    imageContainer: {
+      [theme.breakpoints.down('md')]: {
+        paddingLeft: '5px !important'
+      },
+    },
+    image1:{
+      height: 400, 
+      width: '100%',
+    },
+    image2:{
+      height: 400, 
+      width: '100%',
+      objectPosition: 'top',
+    },
+    image3:{
+      height: 400, 
+      width: '100%',
+      objectFit: 'fill !important',
+      objectPosition: 'right',
+      [theme.breakpoints.down('md')]: {
+        objectFit: 'cover !important',
+      },
+    },
+    top_button_box: {
+      display: 'flex', 
+      justifyContent: 'flex-end', 
+      padding: '30px 10px'
+    },
+    bottom_button_box: {
+      display: 'flex', 
+      justifyContent: 'center', 
+      paddingTop: '150px'
+    },
+    top_button1: {
+      padding: '5px 55px !important', 
+      fontSize: '16px !important', 
+      borderRadius: '0 !important',
+      backgroundColor: '#C00000 !important',
+      textTransform: 'none !important',
+    },
+    top_button2: {
+      padding: '5px 55px !important', 
+      fontSize: '16px !important', 
+      borderRadius: '0 !important',
+      backgroundColor: '#2E75B6 !important',
+      textTransform: 'none !important',
+    },
+    top_button3: {
+      padding: '5px 55px !important',
+      fontSize: '16px !important',  
+      borderRadius: '0 !important',
+      backgroundColor: '#548235 !important',
+      textTransform: 'none !important',
+    },
+    bottom_button: {
+      fontSize: '16px !important', 
+      fontWeight: '800 !important', 
+      padding: '10px 70px !important', 
+      borderRadius: '0 !important', 
+      backgroundColor: '#D0CECE !important', 
+      color: '#000 !important', 
+      textTransform: 'none !important',
     },
     TextBox1: {
       width: '31%',
@@ -196,7 +258,7 @@ const styles = (theme) => {
       left: '10%',
       textAlign: 'left',
       [theme.breakpoints.down('sm')]: {
-        left: '175px !important',
+        left: '30px !important',
       },
     },
     TextBox2: {
@@ -214,7 +276,7 @@ const styles = (theme) => {
       },
       [theme.breakpoints.down('sm')]: {
         width: 200,
-        left: '128px !important',
+        left: '30px !important',
       },
     },
     TextBox3: {
@@ -231,27 +293,33 @@ const styles = (theme) => {
       },
     },
     TextBox4: {
-      width: '32%',
+      width: '440px',
       height: '100%',
       position: 'absolute', 
-      top: '20%', 
-      left: '18%',
-      transform: 'translateX(-50%)',
-      textAlign: 'left',
       color: '#fff',
-      [theme.breakpoints.down('md')]: {
-        left: '155px !important',
-        width: 200,
-      },
+      top: '20%', 
+      left: '3%',
+      textAlign: 'left',
+      zIndex: 1,
       [theme.breakpoints.down('sm')]: {
-        left: '125px !important',
         width: 200,
+        left: '30px !important',
+      },
+    },
+    main_bar_button: {
+      textTransform: 'none', 
+      padding: '15px 130px !important', 
+      fontSize: 24,
+      [theme.breakpoints.down('sm')]: {
+        fontSize: 18,
+        padding: '15px 80px !important', 
       },
     },
     ImageHeading1: {
       fontSize: 60,
       lineHeight: 1.1,
       textTransform: 'uppercase',
+      fontFamily: 'cooper black',
       fontWeight: 300,
       [theme.breakpoints.down('sm')]: {
         fontSize: 37,
@@ -275,7 +343,19 @@ const styles = (theme) => {
         fontSize: 23,
       },
     },
+    ImageHeading4: {
+      fontSize: 26,
+      lineHeight: 1.4,
+      textTransform: 'uppercase',
+      paddingBottom: 15,
+      color: '#000',
+      fontFamily: 'cooper black',
+      [theme.breakpoints.down('sm')]: {
+        fontSize: 23,
+      },
+    },
     imageSubheadng: {
+      fontFamily: 'Verdana',
       fontSize: 24, 
       lineHeight: 1.5, 
       paddingTop: 50,
@@ -283,9 +363,31 @@ const styles = (theme) => {
         fontSize: 16,
       },
     },
+    buttonBox: {
+      color: '#fff',
+      paddingTop: 50,
+      [theme.breakpoints.down('sm')]: {
+        padding: '',
+      },
+    },
+    buttonBox4: {
+      color: '#fff',
+    },
     ImageCardButton: {
       textTransform: 'none',
       padding: '10px 30px 10px 30px'
+    },
+    textContent: {
+      position: 'absolute',
+      width: 452,
+      height: '100%',
+      top: 0,
+      left: 0,
+      background: 'rgb(255, 255, 255, 1)',
+      backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      [theme.breakpoints.down('sm')]: {
+        width: 0,
+      },
     },
     StatisticsBar: {
       backgroundImage: 'url(https://static.wixstatic.com/media/82fcd3_7a9abf1cf93845128c7233ec2618ee98~mv2.jpg/v1/fill/w_1423,h_540,al_c,q_85,enc_auto/82fcd3_7a9abf1cf93845128c7233ec2618ee98~mv2.jpg)',
@@ -497,7 +599,7 @@ const styles = (theme) => {
     footer_index: {
       backgroundColor: '#2E2D2D',
       [theme.breakpoints.down('sm')]: {
-        display: 'none',
+        marginTop: '65px ',
       },
     },
     footer_index_text: {
@@ -505,6 +607,10 @@ const styles = (theme) => {
       padding: '15px 100px',
       fontSize: '12px !important',
       fontWeight: '200 !important',
+      [theme.breakpoints.down('sm')]: {
+        padding: '15px 60px',
+        textAlign: 'center',
+      },
     },
     footer_link_bar: {
       display: 'flex',

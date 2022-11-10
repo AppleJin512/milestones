@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Button } from '@mui/material';
+import { Card, CardContent, CardMedia, Button, Box } from '@mui/material';
 import useStyles from '../styles/styles';
 import { styled } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
@@ -18,7 +18,7 @@ const ImageCard = (props) => {
 
     return (
         <Card className={classes.card}>
-            <div>
+            <div style={{position: 'relative'}}>
                 <CardContent className={classes.content}>
                   <div style={{position: 'relative'}} >
                     <CardMedia
@@ -27,12 +27,13 @@ const ImageCard = (props) => {
                         image={props.image_url}
                     />
                     <div className={props.TextBoxClassName} >
-                      <div className={props.ImageHeadingClassName}>{props.ImageHeading}</div>
-                      <div className={classes.imageSubheadng}>{props.ImageSubheading}</div>
-                      <div style={{color: '#fff', paddingTop: 50}}><ColorButton variant="contained" style={{textTransform: 'none', padding: '15px 130px', fontSize: 24}}>{props.ImageButtonName}</ColorButton></div>
+                        <div className={props.ImageHeadingClassName}>{props.ImageHeading}</div>
+                        <div className={classes.imageSubheadng}>{props.ImageSubheading}</div>
+                        <div className={props.buttonBoxClassName}><ColorButton variant="contained" className={classes.main_bar_button}>{props.ImageButtonName}</ColorButton></div>
                     </div>
                   </div>
                 </CardContent>
+                <Box className={props.textContentClassName}></Box>
             </div>                
         </Card>
         

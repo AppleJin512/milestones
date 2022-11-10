@@ -24,7 +24,7 @@ const StatisticsBar = () => {
                     <Grid container spacing={5} style={{paddingBottom: 70}}>
                         {statisticsBarData.map((item, index) => {
                             return (
-                                <Grid key={index} item md={4}>
+                                <Grid key={index} item md={4} sm={12}>
                                     <StatisticsCard statisticsInfo={item.statisticsInfo} img_name={item.img_name} statisticsInfoHeader={item.statisticsInfoHeader} />
                                 </Grid>
                             )

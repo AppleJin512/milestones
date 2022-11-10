@@ -41,7 +41,7 @@ export default function Footer() {
                 </Box>
             </Container>
             <Box className={classes.footer_index}>
-                <Container maxWidth="lg">
+                <Container maxWidth="xl">
                     <Typography className={classes.footer_index_text}>©2023 by Raw.etc. Proudly created with Wix.com</Typography>
                 </Container>
             </Box>
