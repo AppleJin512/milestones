@@ -78,6 +78,7 @@ const Header = (props) => {
           <ListItemText primary="SHOP" style={{display: 'flex', justifyContent: 'center', marginLeft: 24}} onClick={handleSubListMenu}/>
           {openSubListMenu ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
+
         <Collapse in={openSubListMenu} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem className={classes.resposiveNavBar} button>
@@ -91,6 +92,7 @@ const Header = (props) => {
             </ListItem>
           </List>
         </Collapse>
+        
         <ListItem className={classes.resposiveNavBar} button onClick={()=>goToOtherPagesOnMobile(4)}>
           <ListItemText primary="ABOUT" style={{display: 'flex', justifyContent: 'center'}}/>
         </ListItem>

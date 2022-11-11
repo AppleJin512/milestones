@@ -192,16 +192,19 @@ const styles = (theme) => {
       },
     },
     image1:{
-      height: 400, 
+      height: 399, 
       width: '100%',
+      [theme.breakpoints.only('xl')]: {
+        objectFit: 'fill !important',
+      },
     },
     image2:{
-      height: 400, 
+      height: 399, 
       width: '100%',
-      objectPosition: 'top',
+      objectPosition: 'top !important',
     },
     image3:{
-      height: 400, 
+      height: 399, 
       width: '100%',
       objectFit: 'fill !important',
       objectPosition: 'right',
@@ -293,7 +296,7 @@ const styles = (theme) => {
       },
     },
     TextBox4: {
-      width: '440px',
+      width: '380px',
       height: '100%',
       position: 'absolute', 
       color: '#fff',
@@ -318,7 +321,6 @@ const styles = (theme) => {
     ImageHeading1: {
       fontSize: 60,
       lineHeight: 1.1,
-      textTransform: 'uppercase',
       fontFamily: 'cooper black',
       fontWeight: 300,
       [theme.breakpoints.down('sm')]: {
@@ -346,7 +348,6 @@ const styles = (theme) => {
     ImageHeading4: {
       fontSize: 26,
       lineHeight: 1.4,
-      textTransform: 'uppercase',
       paddingBottom: 15,
       color: '#000',
       fontFamily: 'cooper black',
@@ -398,6 +399,7 @@ const styles = (theme) => {
       '& img': {
         width: 64,
         height: 64,
+        cursor: 'pointer',
       },
     },
     StatisticsTitileBar: {
@@ -547,6 +549,10 @@ const styles = (theme) => {
       paddingBottom: 10,
       fontSize: 14,
       fontWeight: '300 !important',
+      cursor: 'pointer',
+      '&:hover': {
+        color: 'red',
+      },
     },
     footer_input: {
       width: '68%',
@@ -607,6 +613,7 @@ const styles = (theme) => {
       padding: '15px 100px',
       fontSize: '12px !important',
       fontWeight: '200 !important',
+      cursor: 'pointer',
       [theme.breakpoints.down('sm')]: {
         padding: '15px 60px',
         textAlign: 'center',

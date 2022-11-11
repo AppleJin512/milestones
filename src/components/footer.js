@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Box, Grid, Typography, Button } from '@mui/material';
-// import { Facebook, , Close, AccountCircle } from '@mui/icons-material';
 import useStyles from '../styles/styles';
 
 export default function Footer() {

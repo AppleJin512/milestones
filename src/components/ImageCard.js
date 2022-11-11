@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, CardContent, CardMedia, Button, Box } from '@mui/material';
 import useStyles from '../styles/styles';
 import { styled } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
 
 const ImageCard = (props) => {
 
@@ -12,7 +11,7 @@ const ImageCard = (props) => {
         backgroundColor: '#0c0145',
         borderRadius: 0,
         '&:hover': {
-        backgroundColor: red[900],
+        backgroundColor: '#120C75',
         },
     }));
 
@@ -40,4 +39,4 @@ const ImageCard = (props) => {
     )
 }
 
-export default ImageCard;
+export default ImageCard;   

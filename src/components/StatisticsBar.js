@@ -1,18 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Box, Grid, Typography } from '@mui/material';
 import useStyles from '../styles/styles';
 import StatisticsCard from './StatisticsCard';
+import { collection, getDocs } from "firebase/firestore";
+import { storage, db } from "../services/firebase"
+import { ref, getDownloadURL, listAll } from "firebase/storage";
 
 const StatisticsBar = () => {
 
-    const statisticsBarData = [
-        { id: 1, statisticsInfoHeader: 'Select Template', statisticsInfo: "Select from one of our templates. We will be adding styles and designs frequently", img_name: "select.png" },
-        { id: 2, statisticsInfoHeader: 'Customize It', statisticsInfo: "Once you select fill out of the form, select some options and upload some files", img_name: "customize.png" },
-        { id: 3, statisticsInfoHeader: 'We Build It', statisticsInfo: "Our team goes to work builing the design to your specifications", img_name: "sketch.png" },
-        { id: 4, statisticsInfoHeader: 'Send For Review', statisticsInfo: "Once we're finished, we will email you a watermarked version for you to review", img_name: "email.png" },
-        { id: 5, statisticsInfoHeader: 'You Approve', statisticsInfo: "You don't pay anything until you approve the design-hopefully, you do!", img_name: "like.png" },
-        { id: 6, statisticsInfoHeader: 'We deliver', statisticsInfo: "If you purchased a plaque, it could take 10-14 days to receive. For digital purchases, it could take 24-48 hours", img_name: "paper-plane.png" },
-    ]
+    const [ iconData, setIconData ] = useState([]);
+
+    useEffect(()=>{
+        getIconUrls();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    
+    const getIconUrls = async (imageFileList) => {
+        
+        var getImgRef, imgRefList = [];
+        const listRef = ref(storage, 'images/landing_page_images/icons');
+        const fileList =  await listAll(listRef);
+        fileList.items.forEach((itemRef) => {
+            getImgRef = ref(storage, itemRef.fullPath);
+            imgRefList.push(getImgRef);
+        })
+        
+        const urls = await multiImage(imgRefList);
+        fetchPost(urls);
+    };
+  
+    const multiImage = async (imageFileList) => {
+      let iconUrlArray = [];
+      for (let i = 0; i < imageFileList.length; i++) {
+          let temp_url_array = {};
+          const imageUrl = await getDownloadURL(imageFileList[i]);
+          temp_url_array.icon_name = imageFileList[i].name;
+          temp_url_array.icon_url = imageUrl;
+          iconUrlArray.push(temp_url_array);
+        }
+      return iconUrlArray;
+    };
+
+    const fetchPost = async (urls) => {      
+        await getDocs(collection(db, "milestones-test"))
+        .then((querySnapshot)=>{             
+            const newData = querySnapshot.docs
+                .map((doc) => ({...doc.data(), id:doc.id }));
+                newData.forEach((item) => {
+                if (urls.length > 0) {
+                    item.icons.forEach((data)=>{
+                        const tempFilterData = urls.filter((url) => { return url.icon_name === data.icon_name });
+                        data.icon_url = tempFilterData[0].icon_url;
+                    })          
+                    setIconData(item.icons);
+                }
+            })
+        })
+    }
 
     const classes = useStyles();
 
@@ -22,10 +66,10 @@ const StatisticsBar = () => {
                 <Box className={classes.StatisticsBar}>
                     <Typography variant="h4" className={classes.StatisticsTitileBar}>HOW IT WORKs</Typography>
                     <Grid container spacing={5} style={{paddingBottom: 70}}>
-                        {statisticsBarData.map((item, index) => {
+                        {iconData.map((item, index) => {
                             return (
                                 <Grid key={index} item md={4} sm={12}>
-                                    <StatisticsCard statisticsInfo={item.statisticsInfo} img_name={item.img_name} statisticsInfoHeader={item.statisticsInfoHeader} />
+                                    <StatisticsCard statisticsInfo={item.intro_text} img_url={item.icon_url} statisticsInfoHeader={item.intro_heading} />
                                 </Grid>
                             )
                         })}
