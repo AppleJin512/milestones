@@ -591,6 +591,7 @@ const styles = (theme) => {
         width: '100%',
         top: 65,
         right: 0,
+        border: '1px solid #0c0145 !important',
       },
       '&:hover': {
         backgroundColor: '#181818 !important',
@@ -601,37 +602,6 @@ const styles = (theme) => {
     footer_input_label: {
       fontSize: '15px !important',
       fontWeight: '200 !important',
-    },
-    footer_index: {
-      backgroundColor: '#2E2D2D',
-      [theme.breakpoints.down('sm')]: {
-        marginTop: '65px ',
-      },
-    },
-    footer_index_text: {
-      color: '#fff',
-      padding: '15px 100px',
-      fontSize: '12px !important',
-      fontWeight: '200 !important',
-      cursor: 'pointer',
-      [theme.breakpoints.down('sm')]: {
-        padding: '15px 60px',
-        textAlign: 'center',
-      },
-    },
-    footer_link_bar: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      paddingTop: 35,
-      paddingBottom: 20,
-      [theme.breakpoints.down('sm')]: {
-        justifyContent: 'center',
-        paddingTop: 80,
-        paddingBottom: 20,
-      },
-      '& p': {
-        marginLeft: 12,
-      },
     },
   };
 };

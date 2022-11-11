@@ -20,7 +20,7 @@ export default function Footer() {
                             <Typography variant='body2' className={classes.footer_menu_item}>Shipping & Runtime</Typography>
                             <Typography variant='body2' className={classes.footer_menu_item}>Store Policy</Typography>
                         </Grid>
-                        <Grid item xl={5} md={5} className={classes.footer_form_box}>
+                        <Grid item xl={5} md={5} sm={8} className={classes.footer_form_box}>
                             <Box
                                 component="form"
                                 sx={{
@@ -39,11 +39,6 @@ export default function Footer() {
                     </Grid>
                 </Box>
             </Container>
-            <Box className={classes.footer_index}>
-                <Container maxWidth="xl">
-                    <Typography className={classes.footer_index_text}>©2023 by Raw.etc. Proudly created with Wix.com</Typography>
-                </Container>
-            </Box>
         </Box>
 
     )

@@ -11,16 +11,33 @@ import { ref, getDownloadURL, listAll } from "firebase/storage";
 export default function ImageBar(props) {
   
   const [ imageData, setImageData ] = useState([]);
-  const [ topBannerImageData, setTopBannerImageData ] = useState([]);
+  // const [ topBannerImageData, setTopBannerImageData ] = useState([]);
   const [ bottomBannerImageData, setBottomBannerImageData ] = useState([]);
   const [ bottom_banner_image, setBottomBannerImage ] = useState('');
   const [ openBackdrop, setOpenBackdrop ] = useState(false);
 
-  useEffect(()=>{
-    setOpenBackdrop(true);
+  useEffect(() => {
+    // getMainImage();
     getImageUrls();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setOpenBackdrop(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  
+  
+  // const getMainImage = async () => {       
+  //   await getDocs(collection(db, "milestones-test"))
+  //   .then((querySnapshot)=>{             
+  //     const newData = querySnapshot.docs
+  //     .map((doc) => ({...doc.data(), id:doc.id }));
+  //     newData.forEach((item) => {      
+  //       item.top_banner_img.forEach((data)=>{
+  //         console.log('top', item.top_banner_img)
+  //         setTopBannerImageData(item.top_banner_img);
+  //       })
+  //     })
+  //   })
+  // }
+         
 
   const getImageUrls = async (imageFileList) => {
 
@@ -60,11 +77,11 @@ export default function ImageBar(props) {
             data.img_url = tempFilterData[0].img_url;
             setImageData(item.image_1);
           })         
-          item.top_banner_img.forEach((data)=>{
-            const tempFilterData = urls.filter((url) => { return url.img_name === data.image_name });
-            data.img_url = tempFilterData[0].img_url;
-            setTopBannerImageData(item.top_banner_img);
-          })      
+          // item.top_banner_img.forEach((data)=>{
+          //   // const tempFilterData = urls.filter((url) => { return url.img_name === data.image_name });
+          //   // data.img_url = tempFilterData[0].img_url;
+          //   setTopBannerImageData(item.top_banner_img);
+          // })      
           item.bottom_banner_image.forEach((data)=>{
             const tempFilterData = urls.filter((url) => { return url.img_name === data.image_name });
             setBottomBannerImage(tempFilterData[0].img_url);
@@ -104,22 +121,18 @@ export default function ImageBar(props) {
   return (
     <Box className={classes.imageBar}>
       <Container className={classes.generalContainer} maxWidth="xl">
-        {topBannerImageData.map((item, index) => {
-          return (
-            <Box key={index}>
-              <ImageCard
-                TextBoxClassName={classes.TextBox1}
-                ImageHeadingClassName={classes.ImageHeading1}
-                ImageStyle={{width: '100%', height: 755}}
-                image_url={item.img_url}
-                ImageHeading={item.image_heading}
-                ImageSubheading={item.image_subheading}
-                ImageButtonName={item.button_name}
-                buttonBoxClassName={classes.buttonBox}
-              />
-          </Box>
-          )
-        })}
+          <Box>
+            <ImageCard
+              TextBoxClassName={classes.TextBox1}
+              ImageHeadingClassName={classes.ImageHeading1}
+              ImageStyle={{width: '100%', height: 755}}
+              image_url={"https://firebasestorage.googleapis.com/v0/b/milestones-adefc.appspot.com/o/images%2Flanding_page_images%2FCelebrate_c.png?alt=media&token=2d030110-58f7-4062-a528-9ad87bfa67d9"}
+              ImageHeading={"Celebrate The Milestones"}
+              ImageSubheading={"Memorabilia designed to hang in the family room"}
+              ImageButtonName={"Shop"}
+              buttonBoxClassName={classes.buttonBox}
+            />
+        </Box>
         <Box style={{paddingTop: 37}}>
           <Grid container spacing={5}>
             {imageData.map((item, index) => {
