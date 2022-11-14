@@ -1,3 +1,4 @@
+const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const webpack = require('webpack');
 module.exports = function override(config) {
     const fallback = config.resolve.fallback || {};
@@ -23,5 +24,7 @@ module.exports = function override(config) {
             fullySpecified: false
         }
     })
+    
+    config.resolve.plugins = config.resolve.plugins.filter(plugin => !(plugin instanceof ModuleScopePlugin));
     return config;
 }

@@ -1,7 +1,6 @@
-import ImageBar from "./components/ImageBar";
-import Header from "./components/Header";
+import ImageBar from "./components/imageBar";
+import Header from "./components/header";
 import PageRocket from "./components/pageRocket";
-import StatisticsBar from "./components/StatisticsBar";
 import Footer from './components/footer';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -20,14 +19,11 @@ const theme = createTheme({
 
 function App() {
 
-  // const classes = useStyles();
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
       <ImageBar />
-      <StatisticsBar />
       <Footer />
       <PageRocket />
     </ThemeProvider>

@@ -212,6 +212,15 @@ const styles = (theme) => {
         objectFit: 'cover !important',
       },
     },
+    customize_button_container: {
+      position: 'absolute',
+      top: 0,
+    },
+    customize_button_container_hidden: {
+      display: 'none !important',
+      position: 'absolute',
+      top: 0,
+    },
     top_button_box: {
       display: 'flex', 
       justifyContent: 'flex-end', 
