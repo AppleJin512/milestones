@@ -15,6 +15,16 @@ export const TextContentList = styled(Typography)(({ theme }) => ({
   fontSize: "14px",
   lineHeight: "26px",
   fontFamily: "Poppins",
+  "&::before": {
+    content: '""',
+    width: "6px",
+    height: "6px",
+    backgroundColor: "#8c8c8c",
+    borderRadius: "50%",
+    border: "none",
+    margin: "8.5px 11px 10px 0",
+    float: "left",
+  },
 }));
 
 export const SubTitle = styled(Typography)({
@@ -32,8 +42,6 @@ export const Title = styled(Typography)({
   lineHeight: "26px",
   fontFamily: "Poppins",
   fontWeight: 700,
-  marginTop: 10,
-  marginBottom: 70,
 });
 
 export const StyledLink = styled(Link)({

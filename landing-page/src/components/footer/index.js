@@ -1,6 +1,19 @@
 import React from "react";
-import { Container, Box, Grid, Typography, Button, Link } from "@mui/material";
+import {
+  Container,
+  Box,
+  Grid,
+  Typography,
+  Button,
+  Link,
+  styled,
+} from "@mui/material";
 import useStyles from "../../styles/styles";
+
+const StyledLink = styled(Link)({
+  textDecoration: "none",
+  color: "white",
+});
 
 export default function Footer() {
   const classes = useStyles();
@@ -23,7 +36,7 @@ export default function Footer() {
                   Shop
                 </Typography>
               </Link>
-              <Link href="/about-us">
+              <Link href="/about-us" underline="none" style={{ color: "#fff" }}>
                 <Typography
                   variant="body2"
                   className={classes.footer_menu_item}
@@ -37,7 +50,11 @@ export default function Footer() {
               </Typography>
             </Grid>
             <Grid item md={5} sm={6}>
-              <Link href="/privacy-policy">
+              <Link
+                href="/privacy-policy"
+                underline="none"
+                style={{ color: "#fff" }}
+              >
                 <Typography
                   variant="body2"
                   className={classes.footer_menu_item}
@@ -45,10 +62,18 @@ export default function Footer() {
                   Shipping & Runtime
                 </Typography>
               </Link>
-
-              <Typography variant="body2" className={classes.footer_menu_item}>
-                Store Policy
-              </Typography>
+              <Link
+                href="/teams-conditions"
+                underline="none"
+                style={{ color: "#fff" }}
+              >
+                <Typography
+                  variant="body2"
+                  className={classes.footer_menu_item}
+                >
+                  Store Policy
+                </Typography>
+              </Link>
             </Grid>
             <Grid item xl={5} md={5} sm={8} className={classes.footer_form_box}>
               <Box
