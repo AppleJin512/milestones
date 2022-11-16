@@ -15,7 +15,9 @@ export default function Policy(props) {
     <Container className={classes.generalContainer} maxWidth="xl">
       <Box mb={8} mt={8}>
         <Box width="100%" py={5} px={15}>
-          <Title variant="h5">PRIVACY POLICY</Title>
+          <Title variant="h5" sx={{ marginTop: "10px", marginBottom: "70px" }}>
+            PRIVACY POLICY
+          </Title>
           <TextContent variant="subtitle2">
             Maintaining the security of your data is a priority at Milestone &
             Moments a Steeful, LLC company, we are committed to respecting your
@@ -50,26 +52,26 @@ export default function Policy(props) {
             <ul>
               <li>
                 <TextContentList>
-                  • Complete your order, send confirmation and shipping updates,
+                  Complete your order, send confirmation and shipping updates,
                   respond to your requests and queries and send event reminders.
                 </TextContentList>
               </li>
               <li>
                 <TextContentList>
-                  • Better understand your requirement, allowing us to
-                  personalize the content you see and improve your experience
-                  when you visit the website
+                  Better understand your requirement, allowing us to personalize
+                  the content you see and improve your experience when you visit
+                  the website
                 </TextContentList>
               </li>
               <li>
                 <TextContentList>
-                  • Evaluate our website’s performance and ensure that it works
+                  Evaluate our website’s performance and ensure that it works
                   properly
                 </TextContentList>
               </li>
               <li>
                 <TextContentList>
-                  • Send you direct marketing communications if you have
+                  Send you direct marketing communications if you have
                   specifically opted in to receive them.
                 </TextContentList>
               </li>
