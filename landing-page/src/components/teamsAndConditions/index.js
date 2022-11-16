@@ -1,13 +1,7 @@
 import React from "react";
-import { Box, Typography, styled, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import useStyles from "../../styles/styles";
-import {
-  Title,
-  SubTitle,
-  TextContent,
-  TextContentList,
-  StyledLink,
-} from "../styledText";
+import { Title, SubTitle, TextContent } from "../styledText";
 
 export default function TeamAndConditions() {
   const classes = useStyles();

@@ -1,3 +1,4 @@
+import { BrowserRouter, Router } from "react-router-dom";
 import ImageBar from "./components/imageBar";
 import Header from "./components/header";
 import PageRocket from "./components/pageRocket";
@@ -20,8 +21,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
-      <RouteContainer />
+      <BrowserRouter>
+        <Header />
+        <RouteContainer />
+      </BrowserRouter>
       <Footer />
       <PageRocket />
     </ThemeProvider>

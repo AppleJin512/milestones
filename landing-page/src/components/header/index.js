@@ -18,6 +18,8 @@ import { ExpandLess, ExpandMore, Close } from "@mui/icons-material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import PropTypes from "prop-types";
 import useStyles from "../../styles/styles";
+import { PAGES } from "../../contants";
+import { useAppPath } from "../../hooks/useAppPath";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -39,7 +41,6 @@ ElevationScroll.propTypes = {
 
 const Header = (props) => {
   const classes = useStyles();
-
   const links = [
     {
       id: "1",
@@ -58,7 +59,7 @@ const Header = (props) => {
     {
       id: "3",
       route: "ABOUT",
-      url: "/about-us",
+      url: PAGES.ABOUT,
       className: classes.link,
       resposiveClassName: classes.resposiveNavBar,
     },
@@ -96,6 +97,15 @@ const Header = (props) => {
     setState({ ...state, [anchor]: open });
   };
 
+  const currentPath = useAppPath();
+
+  const isSelfPage = (path) => {
+    console.log("currentPage", currentPath);
+    console.log("realpath", path);
+    if (currentPath == path) return true;
+    else return false;
+  };
+
   const list = (anchor) => (
     <Box
       sx={{ width: 250 }}
@@ -111,7 +121,10 @@ const Header = (props) => {
         >
           <ListItemText
             primary="HOME"
-            style={{ display: "flex", justifyContent: "center" }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           />
         </ListItem>
         <ListItem
@@ -161,7 +174,10 @@ const Header = (props) => {
         >
           <ListItemText
             primary="ABOUT"
-            style={{ display: "flex", justifyContent: "center" }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           />
         </ListItem>
         <ListItem
@@ -246,7 +262,14 @@ const Header = (props) => {
                     }}
                   >
                     {linkData.map((link) => (
-                      <Link href={link.url} underline="none" key={link.id}>
+                      <Link
+                        href={link.url}
+                        underline="none"
+                        key={link.id}
+                        sx={{
+                          color: isSelfPage(link.url) ? "#DB163A" : "#282828",
+                        }}
+                      >
                         <Typography
                           aria-owns={anchorEl ? "menu" : undefined}
                           aria-haspopup="true"

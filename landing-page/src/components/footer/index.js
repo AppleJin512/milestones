@@ -9,6 +9,7 @@ import {
   styled,
 } from "@mui/material";
 import useStyles from "../../styles/styles";
+import { PAGES } from "../../contants";
 
 const StyledLink = styled(Link)({
   textDecoration: "none",
@@ -36,7 +37,11 @@ export default function Footer() {
                   Shop
                 </Typography>
               </Link>
-              <Link href="/about-us" underline="none" style={{ color: "#fff" }}>
+              <Link
+                href={PAGES.ABOUT}
+                underline="none"
+                style={{ color: "#fff" }}
+              >
                 <Typography
                   variant="body2"
                   className={classes.footer_menu_item}
@@ -51,7 +56,7 @@ export default function Footer() {
             </Grid>
             <Grid item md={5} sm={6}>
               <Link
-                href="/privacy-policy"
+                href={PAGES.POLICY}
                 underline="none"
                 style={{ color: "#fff" }}
               >
@@ -63,7 +68,7 @@ export default function Footer() {
                 </Typography>
               </Link>
               <Link
-                href="/teams-conditions"
+                href={PAGES.TEAMS}
                 underline="none"
                 style={{ color: "#fff" }}
               >
