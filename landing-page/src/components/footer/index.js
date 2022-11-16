@@ -37,7 +37,7 @@ export default function Footer() {
               </Typography>
             </Grid>
             <Grid item md={5} sm={6}>
-              <Link href="">
+              <Link href="/privacy-policy">
                 <Typography
                   variant="body2"
                   className={classes.footer_menu_item}

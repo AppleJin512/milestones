@@ -206,7 +206,6 @@ const Header = (props) => {
   };
 
   const goToOtherPagesOnMobile = (data) => {
-    console.log("about us", data);
     links.forEach((item) => {
       if (item.id === data) {
         if (item.className === classes.resposiveNavBar)

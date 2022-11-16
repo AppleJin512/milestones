@@ -56,7 +56,7 @@ export default function AboutUs(props) {
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Box width="100%" height="100%">
+            <Box width="100%" height={570}>
               <ImageBox></ImageBox>
             </Box>
           </Grid>
