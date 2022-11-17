@@ -39,24 +39,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: "#3c336a",
   },
 }));
-const ColorButtonOL = styled(Button)(({ theme }) => ({
-  color: "#111",
-
-  borderRadius: "0px",
-  fontSize: "16px",
-  borderColor: " #f47064",
-  "&:hover": {
-    backgroundColor: " #f47064",
-    borderColor: " #f47064",
-  },
-  "&:active": {
-    backgroundColor: " #f47064",
-    borderColor: " #f47064",
-  },
-  "&:focus": {
-    backgroundColor: " #f47064",
-  },
-}));
 
 const OutlinedButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
@@ -144,13 +126,13 @@ export default function UploadForm() {
   const [pic, setPic] = useState("");
   const { id } = useParams();
   const [schools, setSchools] = useState([]);
-  const [sizes, setSizes] = useState([]);
-  const [plaques, setPlaques] = useState([]);
+  // const [sizes, setSizes] = useState([]);
+  // const [plaques, setPlaques] = useState([]);
 
   //
   const [sschool, setSschool] = useState("");
-  const [ssize, setSsize] = useState({ price: 0, name: "" });
-  const [splaque, setSplaque] = useState({ price: 0, name: "" });
+  // const [ssize, setSsize] = useState({ price: 0, name: "" });
+  // const [splaque, setSplaque] = useState({ price: 0, name: "" });
   const [playername, setPlayername] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
@@ -160,7 +142,7 @@ export default function UploadForm() {
   // const [sizebtn, setSizebtn] = useState("");
   // const [plaquebtn, setPlaquebtn] = useState("");
   const [progressimg, setProgressimg] = useState(0);
-  const [progresssign, setProgresssign] = useState(0);
+  // const [progresssign, setProgresssign] = useState(0);
   // const [openBackdrop, setOpenBackdrop] = useState(false);
 
   useEffect(() => {
@@ -171,22 +153,22 @@ export default function UploadForm() {
   }, [id]);
 
   useEffect(() => {
-    onSnapshot(collection(db, "sizes"), (snap) => {
-      setSizes(
-        snap.docs.map((e) => ({
-          id: e.id,
-          item: e.data(),
-        }))
-      );
-    });
-    onSnapshot(collection(db, "plaque"), (snap) => {
-      setPlaques(
-        snap.docs.map((e) => ({
-          id: e.id,
-          item: e.data(),
-        }))
-      );
-    });
+    // onSnapshot(collection(db, "sizes"), (snap) => {
+    //   setSizes(
+    //     snap.docs.map((e) => ({
+    //       id: e.id,
+    //       item: e.data(),
+    //     }))
+    //   );
+    // });
+    // onSnapshot(collection(db, "plaque"), (snap) => {
+    //   setPlaques(
+    //     snap.docs.map((e) => ({
+    //       id: e.id,
+    //       item: e.data(),
+    //     }))
+    //   );
+    // });
     onSnapshot(collection(db, "schools"), (snap) => {
       setSchools(
         snap.docs.map((e) => ({
@@ -199,12 +181,12 @@ export default function UploadForm() {
   const [wa, setWa] = useState(false);
   const [isValid, setIsValid] = useState(false); //email validate
   const [dirty, setDirty] = useState(false);
-  const [checksubmit, setChecksubmit] = useState(false);
+  // const [checksubmit, setChecksubmit] = useState(false);
   const checkValues = function () {
     if (
       sschool !== "" &&
-      ssize !== "" &&
-      splaque !== "" &&
+      // ssize !== "" &&
+      // splaque !== "" &&
       playername !== "" &&
       email !== "" &&
       image !== "" &&
@@ -213,7 +195,7 @@ export default function UploadForm() {
       return true;
     else {
       setWa(true);
-      setChecksubmit(true);
+      // setChecksubmit(true);
       return false;
     }
   };
@@ -252,12 +234,12 @@ export default function UploadForm() {
     uploadTask2.on(
       "state_changed",
       (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
+        // const percent = Math.round(
+        //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        // );
         // update progress
         // setPercent(percent);
-        setProgresssign(percent);
+        // setProgresssign(percent);
       },
       (err) => console.log(err),
       () => {
@@ -266,7 +248,7 @@ export default function UploadForm() {
           // console.log(url);
           setSignurl(url);
         });
-        setProgresssign(0);
+        // setProgresssign(0);
       }
     );
   };
@@ -277,8 +259,8 @@ export default function UploadForm() {
         picid: id,
         picprice: pic.price,
         school: sschool,
-        size: ssize.name,
-        plaque: splaque.name,
+        // size: ssize.name,
+        // plaque: splaque.name,
         playername: playername,
         email: email,
         sign: sign !== "" ? sign.name : "",
@@ -292,7 +274,7 @@ export default function UploadForm() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageurl, signurl]);
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <div
