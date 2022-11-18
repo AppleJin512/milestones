@@ -1,0 +1,2 @@
+export const PAGE_BACKDROP = "PAGE_BACKDROP";
+export const COUNT_PERCENT = "COUNT_PERCENT";

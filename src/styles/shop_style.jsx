@@ -191,13 +191,13 @@ const styles = (theme) => {
     },
     customize_button_container: {
       position: "absolute",
-      top: "7% !important",
+      top: 0,
       padding: "0px 15px",
     },
     customize_button_container_hidden: {
       display: "none !important",
       position: "absolute",
-      top: "7% !imoportant",
+      top: 0,
       padding: "0px 15px",
     },
     top_button_box: {
@@ -210,27 +210,6 @@ const styles = (theme) => {
       justifyContent: "center",
       paddingTop: "100px",
     },
-    // vite_top_button1: {
-    //     padding: '5px 10px !important',
-    //     fontSize: '16px !important',
-    //     borderRadius: '0 !important',
-    //     backgroundColor: '#F47064 !important',
-    //     textTransform: 'none !important',
-    // },
-    // vite_top_button2: {
-    //     padding: '5px 10px !important',
-    //     fontSize: '16px !important',
-    //     borderRadius: '0 !important',
-    //     backgroundColor: '#2E75B6 !important',
-    //     textTransform: 'none !important',
-    // },
-    // vite_top_button3: {
-    //     padding: '5px 10px !important',
-    //     fontSize: '16px !important',
-    //     borderRadius: '0 !important',
-    //     backgroundColor: '#548235 !important',
-    //     textTransform: 'none !important',
-    // },
     top_button: {
       padding: "5px 30px !important",
       fontSize: "16px !important",
@@ -269,6 +248,17 @@ const styles = (theme) => {
     content: {
       padding: "0 !important",
       position: "relative",
+    },
+    formButton: {
+    },
+    activeFormButton: {
+      backgroundColor: '#0c0145 !important',
+      color: '#fff !important'
+    },
+    paginationBtton: {
+      [theme.breakpoints.down("sm")]: {
+        width: '90px !important',
+      },
     },
   };
 };

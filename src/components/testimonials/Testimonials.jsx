@@ -42,7 +42,7 @@ function Testimonials() {
                 <div className="text-gray-600 mt-6">
                     <ColorButton
                       component={Link}
-                      to='/'
+                      to='/shop'
                       variant='contained'
                       
                     >

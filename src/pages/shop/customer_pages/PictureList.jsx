@@ -3,8 +3,8 @@ import Picture from './Picture';
 import { FormControl, Grid, Pagination, Typography, Divider, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { collection, onSnapshot, query } from 'firebase/firestore';
-import { db } from '../../../firebase';
-import useStyles from '../../styles/shop_style';
+import { db } from '../../../../firebase';
+import useStyles from '../../../styles/shop_style';
 
 const styles = {
     select: {
@@ -40,14 +40,12 @@ function ProductList() {
     const [pictures, setPictures] = useState([]);
     const [picbump, setPicbump] = useState([]);
     const [paginationCount, setPaginationCount] = useState(0);
-    const [totalNum, setTotalNum] = React.useState(0);
-    const [pageNum, setPageNum] = React.useState(12);
-    const [pageid, setPageid] = React.useState(1);
-    const [openBackdrop, setOpenBackdrop] = useState(false);
+    const [totalNum, setTotalNum] = useState(0);
+    const [pageNum, setPageNum] = useState(12);
+    const [pageid, setPageid] = useState(1);
     
     
     useEffect(() => {
-        setOpenBackdrop(true);
         const q = query(collection(db, 'pictures'));
         onSnapshot(q, (snapshot) => {
             setTotalNum(snapshot.docs.length);
@@ -58,6 +56,7 @@ function ProductList() {
                 })
             ));
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -71,11 +70,9 @@ function ProductList() {
             
         }     
         setPictures(buf);
-        setOpenBackdrop(false);
      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageid, picbump]);
     useEffect(()=>{
-        setOpenBackdrop(true);
         setPaginationCount(Math.ceil(picbump.length / pageNum));
         setPageid(1);
         let buf=[];
@@ -86,7 +83,6 @@ function ProductList() {
             
         }     
         setPictures(buf);
-        setOpenBackdrop(false);
      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageNum])
 
@@ -101,6 +97,7 @@ function ProductList() {
             <div className='flex flex-row mt-3 mb-btn-hide px-6 justify-between'>
                 <div>
                     <ColorButton
+                        className={classes.paginationBtton}
                         onClick={e=>{
                             e.preventDefault();
                             setPageid(pageid-1);
@@ -114,6 +111,7 @@ function ProductList() {
                 </div>
                 <div>
                     <ColorButton
+                        className={classes.paginationBtton}
                         onClick={e=>{
                             e.preventDefault();
                             setPageid(pageid+1);
@@ -158,7 +156,7 @@ function ProductList() {
                 </Grid>
             </div>
 
-            <div className='flex container flex-wrap md:px-12 sm:px-12 lg:px-24 px-6  justify-con '>
+            <div className='flex container flex-wrap md:px-12 sm:px-10 lg:px-24 px-0 justify-con'>
                 {pictures.map((ele, i) => {
                     if (ele.item.show_state === true) ele.display_style = classes.customize_button_container;
                     else if (ele.item.show_state === false) ele.display_style = classes.customize_button_container_hidden;

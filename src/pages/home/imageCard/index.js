@@ -28,7 +28,7 @@ const ImageCard = (props) => {
                     <div className={props.TextBoxClassName} >
                         <div className={props.ImageHeadingClassName}>{props.ImageHeading}</div>
                         <div className={classes.imageSubheadng}>{props.ImageSubheading}</div>
-                        <div className={props.buttonBoxClassName}><ColorButton variant="contained" className={classes.main_bar_button}>{props.ImageButtonName}</ColorButton></div>
+                        <div className={props.buttonBoxClassName}><ColorButton variant="contained" className={classes.main_bar_button} id={props.id} onClick={(e)=>props.onGoToOtherPage(e)}>{props.ImageButtonName}</ColorButton></div>
                     </div>
                   </div>
                 </CardContent>

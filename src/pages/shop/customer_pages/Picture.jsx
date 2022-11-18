@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Box, Button } from '@mui/material';
-import useStyles from '../../styles/shop_style';
+import useStyles from '../../../styles/shop_style';
 
 export default function Picture(props) {
 
@@ -9,9 +9,9 @@ export default function Picture(props) {
 
 
     return (
-        <div className="relative flex flex-col items-center bg-white rounded m-4 mb-res">
-            <div className=" md:w-60 md:max-w-60 mb-5  sm:max-w-52  sm:w-52  mb-h w-52">
-                <Link to={`picdetail/${props.id}`} className="h-full w-full block">
+        <div className="relative flex flex-col items-center bg-white rounded m-4 pt-5 mb-res">
+            <div className="md:w-60 md:max-w-60 mb-5   mb-h w-full">
+                <Link to={`picdetail/${props.id}`} className="shopImageBox">
                     <img src={props.item.imgurl} alt="/src/images/3.jpg" className="w-auto h-auto shadow-lg shadow-gray-500 absolute left-2/4 top-2/4" style={{ transform: 'translate(-50%,-60%)', height: 250 }} data-aos="zoom-y-out" />
                     <Container maxWidth="lg" className={props.display_style}>
                         <Box className={classes.top_button_box}>

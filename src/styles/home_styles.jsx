@@ -2,6 +2,9 @@ import { makeStyles } from "@mui/styles";
 
 const styles = (theme) => {
   return {
+    mainBodyRoot: {
+      minHeight: 'cal(100vh-30px)'
+    },
     navBar: {
       backgroundColor: "white !important",
       paddingLeft: "0 !important",
@@ -263,7 +266,7 @@ const styles = (theme) => {
       textTransform: "none !important",
     },
     TextBox1: {
-      width: "31%",
+      width: "30%",
       height: "100%",
       position: "absolute",
       color: "#fff",
@@ -272,6 +275,7 @@ const styles = (theme) => {
       textAlign: "left",
       [theme.breakpoints.down("sm")]: {
         left: "30px !important",
+        width: "62%",
       },
     },
     TextBox2: {
@@ -315,7 +319,7 @@ const styles = (theme) => {
       textAlign: "left",
       zIndex: 1,
       [theme.breakpoints.down("sm")]: {
-        width: 200,
+        width: 235,
         left: "30px !important",
       },
     },
@@ -548,6 +552,9 @@ const styles = (theme) => {
     },
     footer: {
       backgroundColor: "#181818",
+      // position: 'absolute',
+      // bottom: 0,
+      // width: '100% !importantF'
     },
     footer_menu_box: {
       color: "#fff",
@@ -564,6 +571,12 @@ const styles = (theme) => {
       "&:hover": {
         color: "red",
       },
+    },
+    footer_right_menu_item: {
+      paddingBottom: 10,
+      fontSize: 14,
+      fontWeight: "300 !important",
+      cursor: "pointer",
     },
     footer_input: {
       width: "68%",
@@ -614,6 +627,12 @@ const styles = (theme) => {
       fontSize: "15px !important",
       fontWeight: "200 !important",
     },
+    aboutUsTextBox: {
+      padding: '120px 40px !important',
+      [theme.breakpoints.down("sm")]: {
+        padding: "40px !important",
+      },
+    }
   };
 };
 

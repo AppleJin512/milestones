@@ -1,25 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  AppBar,
-  Typography,
-  Box,
-  Toolbar,
-  List,
-  ListItem,
-  ListItemText,
-  IconButton,
-  Drawer,
-  Container,
-  Hidden,
-  Collapse,
-} from "@mui/material";
-import { ExpandLess, ExpandMore, Close } from "@mui/icons-material";
+import { AppBar, Typography, Box, Toolbar, List, ListItem, ListItemText, IconButton, Drawer, Container, Hidden,} from "@mui/material";
+import { Close } from "@mui/icons-material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import PropTypes from "prop-types";
 import useStyles from "../../styles/home_styles";
 import { PAGES } from "../../auth/auth_url";
-// import { useAppPath } from "../../hooks/useAppPath";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -41,6 +27,8 @@ ElevationScroll.propTypes = {
 
 const Header = (props) => {
   const classes = useStyles();
+  const navigate = useNavigate();
+
   const links = [
     {
       id: "1",
@@ -76,11 +64,6 @@ const Header = (props) => {
   const [state, setState] = useState({
     right: false,
   });
-  const [openSubListMenu, setOpenSubListMenu] = useState(false);
-
-  const handleSubListMenu = () => {
-    setOpenSubListMenu(!openSubListMenu);
-  };
 
   useEffect(() => {
     setLinkData(links);
@@ -97,99 +80,20 @@ const Header = (props) => {
     setState({ ...state, [anchor]: open });
   };
 
-  // const currentPath = useAppPath();
-
-  // const isSelfPage = (path) => {
-  //   console.log("currentPage", currentPath);
-  //   console.log("realpath", path);
-  //   if (currentPath === path) return true;
-  //   else return false;
-  // };
-
   const list = (anchor) => (
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem
-          className={classes.resposiveNavBar}
-          button
-          onClick={() => goToOtherPagesOnMobile(1)}
-        >
-          <ListItemText
-            primary="HOME"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          />
-        </ListItem>
-        <ListItem
-          className={classes.resposiveNavBar}
-          button
-          onClick={() => goToOtherPagesOnMobile(2)}
-        >
-          <ListItemText
-            primary="SHOP"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginLeft: 24,
-            }}
-            onClick={handleSubListMenu}
-          />
-          {openSubListMenu ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-
-        <Collapse in={openSubListMenu} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem className={classes.resposiveNavBar} button>
-              <ListItemText
-                primary="Tents"
-                style={{ display: "flex", justifyContent: "center" }}
-              />
+        {links.map((link) => {
+          return (
+            <ListItem key={link.id} className={classes.resposiveNavBar}  button onClick={(e) => goToOtherPagesOnMobile({url:link.url, id: link.id})}>
+              <ListItemText primary={link.route}  style={{  display: "flex",  justifyContent: "center",  }}/>
             </ListItem>
-            <ListItem className={classes.resposiveNavBar} button>
-              <ListItemText
-                primary="Jackets & Vests"
-                style={{ display: "flex", justifyContent: "center" }}
-              />
-            </ListItem>
-            <ListItem className={classes.resposiveNavBar} button>
-              <ListItemText
-                primary="Sleeping Bags"
-                style={{ display: "flex", justifyContent: "center" }}
-              />
-            </ListItem>
-          </List>
-        </Collapse>
-
-        <ListItem
-          className={classes.resposiveNavBar}
-          button
-          onClick={() => goToOtherPagesOnMobile(4)}
-        >
-          <ListItemText
-            primary="ABOUT"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          />
-        </ListItem>
-        <ListItem
-          className={classes.resposiveNavBar}
-          button
-          onClick={() => goToOtherPagesOnMobile(6)}
-        >
-          <ListItemText
-            primary="CONTACT"
-            style={{ display: "flex", justifyContent: "center" }}
-          />
-        </ListItem>
+          )
+        })}
       </List>
     </Box>
   );
@@ -218,8 +122,20 @@ const Header = (props) => {
         }
       });
       setLinkData(links);
+      if (e.target.id === "4") {
+        window.scrollTo({
+          top: (0, document.body.scrollHeight),
+          behavior: "smooth",
+      });
+      }
     }
   };
+
+  const trigger = useScrollTrigger({
+    target: document.body,
+    disableHysteresis: true,
+    threshold: 100,
+  });
 
   const goToOtherPagesOnMobile = (data) => {
     links.forEach((item) => {
@@ -232,6 +148,16 @@ const Header = (props) => {
       }
     });
     setLinkData(links);
+    if (data.id === "4") {
+      setState({right: false});
+      window.scrollTo({
+        top: (0, document.body.scrollHeight),
+        behavior: "smooth",
+      });
+    } else {
+      navigate(data);
+      setState({right: false});
+    }
   };
 
   return (
@@ -273,6 +199,7 @@ const Header = (props) => {
                           id={link.id}
                           onClick={(e) => setActiveEffect(e)}
                           onMouseOver={(e) => setActiveEffect(e)}
+                          in={trigger.toString()}
                         >
                           {link.route}
                         </Typography>

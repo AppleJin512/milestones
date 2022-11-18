@@ -1,104 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import {
-  Alert,
-  LinearProgress,
-  InputLabel,
-  Select,
-  FormControl,
-  MenuItem,
-  Paper,
-  Breadcrumbs,
-  Box,
-  Grid,
-  Button,
-  Typography,
-  InputBase,
-} from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
-import {
-  collection,
-  onSnapshot,
-  query,
-  doc,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
-import { db, storage } from "../../../firebase";
+import { Alert, InputLabel, Select, FormControl, MenuItem, Paper, Breadcrumbs, 
+         Box, Grid, Typography, 
+       } from "@mui/material";
+import { collection, onSnapshot, query, doc, addDoc, serverTimestamp, } from "firebase/firestore";
+import { db, storage } from "../../../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import isEmail from "validator/lib/isEmail";
-import useStyles from "../../styles/shop_style";
-
-const ColorButton = styled(Button)(({ theme }) => ({
-  textTransform: "none",
-  color: "white",
-  backgroundColor: "#3c336a",
-  borderRadius: "0px",
-  fontSize: "16px",
-  "&:hover": {
-    backgroundColor: "#3c336a",
-  },
-}));
-
-const OutlinedButton = styled(Button)(({ theme }) => ({
-  textTransform: "none",
-  width: "100%",
-  color: theme.palette.grey["800"],
-  borderColor: theme.palette.grey["400"],
-  fontSize: "16px",
-  "&:hover": {
-    borderColor: theme.palette.grey["500"],
-  },
-}));
-
-const UploadButton = styled(Button)(({ theme }) => ({
-  textTransform: "none",
-  background: theme.palette.grey["700"],
-  border: `1px solid ${theme.palette.grey["900"]}`,
-  color: "white",
-  "&:hover": {
-    background: theme.palette.grey["700"],
-    border: `1px solid ${theme.palette.grey["900"]}`,
-    outline: "none",
-  },
-}));
-
-const StyledTextField = styled(InputBase)(({ theme }) => ({
-  "& .MuiInputBase-input": {
-    "&::placeholder": {
-      textAlign: "center",
-    },
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: theme.palette.mode === "light" ? "#fcfcfb" : "#2b2b2b",
-    border: "1px solid #ced4da",
-    fontSize: 16,
-    width: "100%",
-    padding: "10px 12px",
-    transition: theme.transitions.create([
-      "border-color",
-      "background-color",
-      "box-shadow",
-    ]),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
-    "&:focus": {
-      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-      borderColor: theme.palette.primary.main,
-    },
-  },
-}));
+import useStyles from '../../../styles/shop_style';
+import { ColorButton, OutlinedButton, UploadButton, StyledTextField } from "../../../styles/customized_components";
+import { useDispatch } from 'react-redux';
+import { pageBackdrop, percentCounter } from '../../../actions/actions';
+import LoadingNotification from "../../../components/loading_notification";
 
 function handleClick(event) {
   event.preventDefault();
@@ -126,24 +39,20 @@ export default function UploadForm() {
   const [pic, setPic] = useState("");
   const { id } = useParams();
   const [schools, setSchools] = useState([]);
-  // const [sizes, setSizes] = useState([]);
-  // const [plaques, setPlaques] = useState([]);
-
-  //
   const [sschool, setSschool] = useState("");
-  // const [ssize, setSsize] = useState({ price: 0, name: "" });
-  // const [splaque, setSplaque] = useState({ price: 0, name: "" });
   const [playername, setPlayername] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
-  const [sign, setSign] = useState("");
-  // const [markprice, setMarkprice]
-  //
-  // const [sizebtn, setSizebtn] = useState("");
-  // const [plaquebtn, setPlaquebtn] = useState("");
-  const [progressimg, setProgressimg] = useState(0);
-  // const [progresssign, setProgresssign] = useState(0);
-  // const [openBackdrop, setOpenBackdrop] = useState(false);
+  const classes = useStyles();
+  const [wa, setWa] = useState(false);
+  const [isValid, setIsValid] = useState(false); //email validate
+  const [dirty, setDirty] = useState(false);
+  const [ activeTypeButton, setActiveTypeButton ] = useState(false);
+  const [ activeQualityButton, setActiveQualityButton ] = useState(false);
+  const [imageurl, setImageurl] = useState("");
+  const [ type, setType ] = useState('');
+  const [ quality, setQuality ] = useState('');
+  const handleDispatch = useDispatch();
 
   useEffect(() => {
     const q = query(doc(collection(db, "pictures"), id));
@@ -153,22 +62,6 @@ export default function UploadForm() {
   }, [id]);
 
   useEffect(() => {
-    // onSnapshot(collection(db, "sizes"), (snap) => {
-    //   setSizes(
-    //     snap.docs.map((e) => ({
-    //       id: e.id,
-    //       item: e.data(),
-    //     }))
-    //   );
-    // });
-    // onSnapshot(collection(db, "plaque"), (snap) => {
-    //   setPlaques(
-    //     snap.docs.map((e) => ({
-    //       id: e.id,
-    //       item: e.data(),
-    //     }))
-    //   );
-    // });
     onSnapshot(collection(db, "schools"), (snap) => {
       setSchools(
         snap.docs.map((e) => ({
@@ -178,103 +71,82 @@ export default function UploadForm() {
       );
     });
   }, []);
-  const [wa, setWa] = useState(false);
-  const [isValid, setIsValid] = useState(false); //email validate
-  const [dirty, setDirty] = useState(false);
-  // const [checksubmit, setChecksubmit] = useState(false);
+
+
   const checkValues = function () {
     if (
       sschool !== "" &&
-      // ssize !== "" &&
-      // splaque !== "" &&
+      type !== "" &&
+      quality !== "" &&
       playername !== "" &&
       email !== "" &&
       image !== "" &&
-      isValid
+      isValid === true
     )
       return true;
     else {
       setWa(true);
-      // setChecksubmit(true);
       return false;
     }
   };
-
-  const [imageurl, setImageurl] = useState("");
-  const [signurl, setSignurl] = useState("");
-
+  
+  
   const addData = function () {
+    handleDispatch(pageBackdrop(true));
     const sotrageRef1 = ref(storage, `/playerimages/${id}_${image.name}`);
     const uploadTask1 = uploadBytesResumable(sotrageRef1, image);
     uploadTask1.on(
-      "state_changed",
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        // update progress
-        setProgressimg(percent);
-      },
-      (err) => console.log(err),
-      () => {
-        // download url
-        getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
-          setImageurl(url);
-        });
-        setProgressimg(0);
-      }
-    );
+        "state_changed",
+        (snapshot) => {
+          const percent = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          handleDispatch(percentCounter(Number(percent)));
+        },
+        (err) => console.log(err),
+        () => {
+            // download url
+            getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
+                setImageurl(url);
 
-    if (sign === "") {
-      setSignurl("--");
-      return;
-    }
-    const sotrageRef2 = ref(storage, `/playersignature/${id}_${sign.name}`);
-    const uploadTask2 = uploadBytesResumable(sotrageRef2, sign);
-    uploadTask2.on(
-      "state_changed",
-      (snapshot) => {
-        // const percent = Math.round(
-        //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        // );
-        // update progress
-        // setPercent(percent);
-        // setProgresssign(percent);
-      },
-      (err) => console.log(err),
-      () => {
-        // download url
-        getDownloadURL(uploadTask2.snapshot.ref).then((url) => {
-          // console.log(url);
-          setSignurl(url);
-        });
-        // setProgresssign(0);
-      }
+            });
+        }
     );
-  };
-  useEffect(() => {
-    if (imageurl !== "" && signurl !== "") {
+}
+
+
+useEffect(() => {
+  if (imageurl !== "") {
+    handleDispatch(pageBackdrop(false));
       addDoc(collection(db, "orders"), {
         picname: pic.name,
         picid: id,
         picprice: pic.price,
         school: sschool,
-        // size: ssize.name,
-        // plaque: splaque.name,
+        file_type : type,
+        file_quality: quality,
         playername: playername,
         email: email,
-        sign: sign !== "" ? sign.name : "",
         image: image.name,
         imageurl: imageurl,
-        signurl: signurl,
         timestamp: serverTimestamp(),
       });
-      navigate("/submit");
+      // handleDispatch(pageBackdrop(false));
+      navigate("/shop/submit");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageurl, signurl]);
+}, [imageurl]);
 
-  // const classes = useStyles();
+  const onHandleImages = (data) => {
+    if (data === "digital" || data === "plaque") {
+      setActiveTypeButton (data);
+      setType(data);
+    }
+    if (data === "web" || data === "print") {
+      setActiveQualityButton(data);
+      setQuality(data);
+    }
+  }
 
   return (
     <div
@@ -310,8 +182,6 @@ export default function UploadForm() {
                   }}
                   data-aos="zoom-y-out"
                 />
-
-                {/* <ShowItems /> */}
               </div>
             </div>
           </Grid>
@@ -347,10 +217,23 @@ export default function UploadForm() {
                         <Typography variant="subtitle1">Type*</Typography>
                       </Box>
                       <Box display="flex" justifyContent="space-between" px={1}>
-                        <OutlinedButton variant="outlined" sx={{ mr: 3 }}>
+                        <OutlinedButton 
+                          variant="outlined" 
+                          id="digital"
+                          onChange={(e)=>setType(e.target.id)} 
+                          onClick={(e)=>onHandleImages(e.target.id)}
+                          className={ activeTypeButton === "digital" ? classes.activeFormButton : classes.formButton}
+                          sx={{ mr: 3 }} 
+                        >
                           Digital File
                         </OutlinedButton>
-                        <OutlinedButton variant="outlined">
+                        <OutlinedButton 
+                          variant="outlined"
+                          id="plaque" 
+                          onChange={(e)=>setType(e.target.id)} 
+                          onClick={(e)=>onHandleImages(e.target.id)}
+                          className={ activeTypeButton === "plaque" ? classes.activeFormButton : classes.formButton}
+                        >
                           Plaque
                         </OutlinedButton>
                       </Box>
@@ -364,10 +247,23 @@ export default function UploadForm() {
                         <Typography variant="subtitle1">Quality*</Typography>
                       </Box>
                       <Box display="flex" justifyContent="space-between" px={1}>
-                        <OutlinedButton variant="outlined" sx={{ mr: 3 }}>
+                        <OutlinedButton 
+                          variant="outlined" 
+                          sx={{ mr: 3 }}
+                          id="web" 
+                          onChange={(e)=>setQuality(e.target.id)} 
+                          onClick={(e)=>onHandleImages(e.target.id)}
+                          className={ activeQualityButton === "web" ? classes.activeFormButton : classes.formButton}
+                        >
                           Web
                         </OutlinedButton>
-                        <OutlinedButton variant="outlined">
+                        <OutlinedButton 
+                          variant="outlined"
+                          id="print" 
+                          onChange={(e)=>setQuality(e.target.id)} 
+                          onClick={(e)=>onHandleImages(e.target.id)}
+                          className={ activeQualityButton === "print" ? classes.activeFormButton : classes.formButton}
+                        >
                           To Print
                         </OutlinedButton>
                       </Box>
@@ -395,12 +291,6 @@ export default function UploadForm() {
                     </Box>
                   </Paper>
                 </Box>
-                <LinearProgress
-                  color="secondary"
-                  style={{ display: progressimg === 0 ? "none" : "block" }}
-                  variant="determinate"
-                  value={progressimg}
-                />
                 <Box mb={2}>
                   <Box mb={1}>
                     <UploadButton
@@ -415,27 +305,9 @@ export default function UploadForm() {
                         type="file"
                         onChange={(e) => {
                           setImage(e.target.files[0]);
-                          // console.log(e.target.value)
                         }}
                         required
                         value={image.value}
-                      />
-                    </UploadButton>
-                  </Box>
-                  <Box>
-                    <UploadButton
-                      variant="contained"
-                      fullWidth
-                      component="label"
-                    >
-                      {sign !== "" ? sign.name : "Upload Signature*"}
-                      <input
-                        hidden
-                        accept="*"
-                        type="file"
-                        onChange={(e) => {
-                          setSign(e.target.files[0]);
-                        }}
                       />
                     </UploadButton>
                   </Box>
@@ -453,7 +325,7 @@ export default function UploadForm() {
                           onBlur={() => setDirty(true)}
                           error={dirty && isValid === false}
                           fullWidth
-                          placeholder="Enter Player Name"
+                          placeholder="Enter Email"
                           onChange={(e) => {
                             let val = e.target.value;
                             if (isEmail(val)) {
@@ -470,14 +342,6 @@ export default function UploadForm() {
                   </Paper>
                 </Box>
                 <Box>
-                  <Alert
-                    severity="warning"
-                    style={{ display: wa ? "flex" : "none" }}
-                    className="mb-5"
-                  >
-                    Please fill all <span style={{ color: "red" }}>*</span>{" "}
-                    fileds
-                  </Alert>
                   <ColorButton
                     fullWidth
                     type="submit"
@@ -492,12 +356,21 @@ export default function UploadForm() {
                   >
                     Submit
                   </ColorButton>
+                  <Alert
+                    severity="warning"
+                    style={{ display: wa ? "flex" : "none" }}
+                    className="mb-5"
+                  >
+                    Please fill all <span style={{ color: "red" }}>*</span>{" "}
+                    fileds
+                  </Alert>
                 </Box>
               </Box>
             </Paper>
           </Grid>
         </Grid>
       </div>
+      <LoadingNotification />
     </div>
   );
 }

@@ -25,9 +25,8 @@ export default function AboutUs(props) {
           <Grid item xs={12} md={6} sx={{ background: "black" }}>
             <Box
               width="100%"
-              py={5}
-              px={15}
               sx={{ color: "white", textAlign: "center" }}
+              className={classes.aboutUsTextBox}
             >
               <Box mb={3}>
                 <Typography variant="h5">ABOUT US</Typography>

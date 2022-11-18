@@ -2,10 +2,16 @@ import React from 'react';
 import { Box } from '@mui/material';
 import useStyles from '../../../styles/home_styles';
 import ImageCard from '../imageCard';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainImageBar() {
 
     const classes = useStyles();
+    const history = useNavigate();
+
+    const onGoToOtherPage = (e) => {
+        history('/shop');
+    }
     
     return (
         <Box>
@@ -18,6 +24,8 @@ export default function MainImageBar() {
                 ImageSubheading={"Memorabilia designed to hang in the family room"}
                 ImageButtonName={"Shop"}
                 buttonBoxClassName={classes.buttonBox}
+                onGoToOtherPage={(e)=>onGoToOtherPage(e)}
+                id={"shop"}
             />
         </Box>
     )

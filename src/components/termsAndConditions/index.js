@@ -3,7 +3,7 @@ import { Box, Container } from "@mui/material";
 import useStyles from "../../styles/home_styles";
 import { Title, SubTitle, TextContent } from "../styledText";
 
-export default function TeamAndConditions() {
+export default function TermAndConditions() {
   const classes = useStyles();
   return (
     <Container className={classes.generalContainer} maxWidth="xl">

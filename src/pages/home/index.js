@@ -5,21 +5,23 @@ import useStyles from "../../styles/home_styles";
 import MainImageBar from "./mainImageBar";
 import ProductImageBar from "./productImageBar";
 import BottomImageBar from "./bottomImageBar";
-import PageBackdrop from "../../components/backdrop";
 import { onSnapshot, query, collection, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import StatisticsBar from "../../components/statisticsBar";
+import { useDispatch } from 'react-redux';
+import { pageBackdrop } from '../../actions/actions';
 
 export default function MainSection(props) {
+
   const [productImageData, setProductImageData] = useState([]);
   const [iconData, setIconData] = useState([]);
   const [bottomBannerImageData, setBottomBannerImageData] = useState([]);
   const [bottom_banner_image, setBottomBannerImage] = useState("");
-  const [openBackdrop, setOpenBackdrop] = useState(false);
   const picturesRef = collection(db, "pictures");
+  const handleDispatch = useDispatch();
 
   useEffect(() => {
-    setOpenBackdrop(true);
+    handleDispatch(pageBackdrop(true));
     const q = query(collection(db, "milestones-test"));
     const que = query(picturesRef, where("show_state", "==", true));
     onSnapshot(q, (snapshot) => {
@@ -59,7 +61,7 @@ export default function MainSection(props) {
 
       var data_url = tiff.toDataURL();
       setBottomBannerImage(data_url);
-      setOpenBackdrop(false);
+      handleDispatch(pageBackdrop(false));
     };
     xhr.send();
   };
@@ -104,7 +106,6 @@ export default function MainSection(props) {
           bottom_banner_image={bottom_banner_image}
         />
       </Container>
-      <PageBackdrop openBackdrop={openBackdrop} />
     </Box>
   );
 }
