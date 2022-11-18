@@ -155,7 +155,7 @@ const Header = (props) => {
         behavior: "smooth",
       });
     } else {
-      navigate(data);
+      navigate(data.url);
       setState({right: false});
     }
   };
