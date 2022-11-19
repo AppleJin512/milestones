@@ -275,7 +275,7 @@ const styles = (theme) => {
       textAlign: "left",
       [theme.breakpoints.down("sm")]: {
         left: "30px !important",
-        width: "62%",
+        width: "90%",
       },
     },
     TextBox2: {

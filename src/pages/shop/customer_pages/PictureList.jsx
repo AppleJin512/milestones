@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db } from '../../../../firebase';
 import useStyles from '../../../styles/shop_style';
+import { useDispatch } from 'react-redux';
+import { pageBackdrop } from '../../../actions/actions';
 
 const styles = {
     select: {
@@ -37,29 +39,55 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 function ProductList() {
-    const [pictures, setPictures] = useState([]);
-    const [picbump, setPicbump] = useState([]);
-    const [paginationCount, setPaginationCount] = useState(0);
-    const [totalNum, setTotalNum] = useState(0);
-    const [pageNum, setPageNum] = useState(12);
-    const [pageid, setPageid] = useState(1);
+    const [ pictures, setPictures ] = useState([]);
+    const [ picbump, setPicbump ] = useState([]);
+    const [ paginationCount, setPaginationCount ] = useState(0);
+    const [ totalNum, setTotalNum ] = useState(0);
+    const [ pageNum, setPageNum ] = useState(12);
+    const [ pageid, setPageid ] = useState(1);
+    const [ showInfo, setShowInfo ] = useState(false);
+    const handleDispatch = useDispatch();
     
     
     useEffect(() => {
+        handleDispatch(pageBackdrop(true));
         const q = query(collection(db, 'pictures'));
+        let temp_data = []; 
         onSnapshot(q, (snapshot) => {
             setTotalNum(snapshot.docs.length);
             setPaginationCount(Math.ceil(snapshot.docs.length / pageNum));
-            setPicbump(snapshot.docs.map(doc => ({
+            temp_data = snapshot.docs.map(doc => ({
                     id: doc.id,
                     item: doc.data()
                 })
-            ));
+            );
+            displayImageData(temp_data);
+            setPicbump(temp_data);
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
+    
+    const displayImageData = (data) => {
+        setPaginationCount(Math.ceil(data.length / pageNum));
+        setPageid(1);
+        let buf=[];
+        for (let i = 0; i < pageNum; i++) {
+            if (data[i] !== undefined){
+                buf.push(data[i]);
+            } 
+            
+        }     
+        setPictures(buf);
+        handleDispatch(pageBackdrop(false));
+        setShowInfo(true);
+    }
+    
+    const handleChange = (e) => {
+        setPageNum(e.target.value);
+    };  
+    
     useEffect(() => {
         let buf = [];
         if (picbump.length === 0) return;
@@ -70,26 +98,9 @@ function ProductList() {
             
         }     
         setPictures(buf);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageid, picbump]);
-    useEffect(()=>{
-        setPaginationCount(Math.ceil(picbump.length / pageNum));
-        setPageid(1);
-        let buf=[];
-        for (let i = 0; i < pageNum; i++) {
-            if (picbump[i] !== undefined){
-                buf.push(picbump[i]);
-            } 
-            
-        }     
-        setPictures(buf);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageNum])
-
-    const handleChange = (e) => {
-        setPageNum(e.target.value);
-    };
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [picbump, pageid])
+    
     const classes = useStyles();
 
     return (
@@ -119,44 +130,44 @@ function ProductList() {
                         disabled={pageid===paginationCount?true:false}
                     >NEXT</ColorButton>
                 </div>
-
-
-            </div>
-            <div className='mt-3 md:px-12 lg:px-24 mb-btn-show'>
-                <Grid container spacing={2} columns={{ xs: 6, sm: 6, md: 12 }} >
-                    <Grid item sm={3} md={6} className="flex item-stretch content-center">
-                        <Typography component="p" style={styles.ptext}>FOUND : {totalNum} </Typography> <Divider orientation="vertical" flexItem /> <Typography component="p" style={styles.ptext}> ITEM PER PAGE </Typography>
-                        <FormControl>
-                            <select
-                                value={pageNum}
-                                onChange={handleChange}
-                                style={styles.select}
-                            >
-                                <option value={12}>12</option>
-                                <option value={24}>24</option>
-                                <option value={48}>48</option>
-                                <option value={72}>72</option>
-                            </select>
-
-                        </FormControl>
-
-                    </Grid>
-                    <Grid item xs={3} sm={3} md={6} className="grid justify-items-end">
-                        <Pagination
-                            count={paginationCount}
-                            size="small"
-                            value={pageid}
-                            onChange={(e, v) => {
-                                e.preventDefault();
-                                setPageid(v);
-                                // console.log(v)
-                            }}
-                        />
-                    </Grid>
-                </Grid>
             </div>
 
-            <div className='flex container flex-wrap md:px-12 sm:px-10 lg:px-24 px-0 justify-con'>
+            {showInfo && (
+                <div className='mt-3 md:px-12 lg:px-24 mb-btn-show'>
+                    <Grid container spacing={2} columns={{ xs: 6, sm: 6, md: 12 }} >
+                        <Grid item sm={3} md={6} className="flex item-stretch content-center">
+                            <Typography component="p" style={styles.ptext}>FOUND : {totalNum} </Typography> <Divider orientation="vertical" flexItem /> <Typography component="p" style={styles.ptext}> ITEM PER PAGE </Typography>
+                            <FormControl>
+                                <select
+                                    value={pageNum}
+                                    onChange={handleChange}
+                                    style={styles.select}
+                                >
+                                    <option value={12}>12</option>
+                                    <option value={24}>24</option>
+                                    <option value={48}>48</option>
+                                    <option value={72}>72</option>
+                                </select>
+
+                            </FormControl>
+
+                        </Grid>
+                        <Grid item xs={3} sm={3} md={6} className="grid justify-items-end">
+                            <Pagination
+                                count={paginationCount}
+                                size="small"
+                                value={pageid}
+                                onChange={(e, v) => {
+                                    e.preventDefault();
+                                    setPageid(v);
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                </div>
+            )}
+
+            <div className='flex container flex-wrap pt-5 md:px-12 sm:px-10 lg:px-24 px-0 justify-con'>
                 {pictures.map((ele, i) => {
                     if (ele.item.show_state === true) ele.display_style = classes.customize_button_container;
                     else if (ele.item.show_state === false) ele.display_style = classes.customize_button_container_hidden;
@@ -166,7 +177,6 @@ function ProductList() {
                     )
                     })}
             </div>
-            {/* <PageBackdrop openBackdrop={openBackdrop} /> */}
         </div>
     );
 }

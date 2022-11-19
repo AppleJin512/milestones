@@ -4,8 +4,7 @@ import { Close } from "@mui/icons-material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import PropTypes from "prop-types";
 import useStyles from "../../styles/home_styles";
-import { PAGES } from "../../auth/auth_url";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -34,20 +33,20 @@ const Header = (props) => {
       id: "1",
       route: "HOME",
       url: "/",
-      className: classes.activeNavButton,
-      resposiveClassName: classes.activeResposiveNavButton,
+      className: classes.link,
+      resposiveClassName: classes.resposiveNavBar,
     },
     {
       id: "2",
       route: "SHOP",
-      url: PAGES.SHOP,
+      url: "/shop",
       className: classes.link,
       resposiveClassName: classes.resposiveNavBar,
     },
     {
       id: "3",
       route: "ABOUT",
-      url: PAGES.ABOUT,
+      url: "/about-us",
       className: classes.link,
       resposiveClassName: classes.resposiveNavBar,
     },
@@ -58,13 +57,21 @@ const Header = (props) => {
       resposiveClassName: classes.resposiveNavBar,
     },
   ];
-
+  
   const [linkData, setLinkData] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [state, setState] = useState({
     right: false,
   });
+  let current_location = useLocation();
 
+  links.forEach((link) => {
+    if (link.url === current_location.pathname) {
+      link.resposiveClassName = classes.activeResposiveNavButton;
+      link.className = classes.activeNavButton;
+    }
+  })
+ 
   useEffect(() => {
     setLinkData(links);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -97,6 +104,7 @@ const Header = (props) => {
       </List>
     </Box>
   );
+
 
   const setActiveEffect = (e) => {
     if (e.type === "mouseover") {

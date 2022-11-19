@@ -13,11 +13,6 @@ import { useDispatch } from 'react-redux';
 import { pageBackdrop, percentCounter } from '../../../actions/actions';
 import LoadingNotification from "../../../components/loading_notification";
 
-function handleClick(event) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
-
 export default function UploadForm() {
   let navigate = useNavigate();
 
@@ -27,11 +22,10 @@ export default function UploadForm() {
       key="1"
       color="inherit"
       to="/"
-      onClick={handleClick}
     >
       HOME
     </Link>,
-    <Link underline="hover" key="2" color="inherit" to="/">
+    <Link underline="hover" key="2" color="inherit" to="/shop">
       PICTURES
     </Link>,
     <p key="3">PICTURE NAME</p>,
@@ -131,7 +125,6 @@ useEffect(() => {
         imageurl: imageurl,
         timestamp: serverTimestamp(),
       });
-      // handleDispatch(pageBackdrop(false));
       navigate("/shop/submit");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,7 +149,7 @@ useEffect(() => {
       <Breadcrumbs
         separator="›"
         aria-label="breadcrumb"
-        style={{ fontSize: "12px", margin: "5px" }}
+        style={{ fontSize: "12px", margin: "5px 50px" }}
       >
         {breadcrumbs}
       </Breadcrumbs>
@@ -168,7 +161,7 @@ useEffect(() => {
           className=" "
         >
           <Grid item xs={3} sm={3} md={6} className="">
-            <h5 className="h5 ml-5">{pic.name}</h5>
+            <h5 className="h5 ml-10">{pic.name}</h5>
             <div className="m-10">
               <div className="w-full h-full relative picdetail-height">
                 <img
