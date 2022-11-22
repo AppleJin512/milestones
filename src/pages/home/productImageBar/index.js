@@ -18,7 +18,7 @@ export default function ProductImageBar(props) {
                         />
                         <Container maxWidth="lg" className={props.display_style}>
                             <Box className={classes.top_button_box}>
-                                <Button variant='contained' className={props.topButtonClassName}>{props.item.state_button}</Button>
+                                {/* <Button variant='contained' className={props.topButtonClassName}>{props.item.state_button}</Button> */}
                             </Box>
                             <Box className={classes.bottom_button_box}>
                                 <Link href={`/shop/picdetail/${props.id}`} underline="none" >
