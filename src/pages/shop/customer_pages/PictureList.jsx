@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Picture from './Picture';
 import { FormControl, Grid, Pagination, Typography, Divider } from '@mui/material';
-import { collection, onSnapshot, query, serverTimestamp, addDoc } from 'firebase/firestore';
-import { ref, getDownloadURL, listAll,  } from "firebase/storage";
-import { db, storage } from '../../../../firebase';
+import { collection, onSnapshot, query } from 'firebase/firestore';
+// import { ref, getDownloadURL, listAll,  } from "firebase/storage";
+import { db } from '../../../../firebase';
 import useStyles from '../../../styles/shop_style';
 import { PictureListColorButton } from '../../../styles/customized_components';
 import { useDispatch } from 'react-redux';
@@ -24,36 +24,11 @@ function ProductList() {
     
     useEffect(()=> {
         handleDispatch(pageBackdrop(true));
-        getImageUrls();
+        getImageData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-      
-    const getImageUrls = async (imageFileList) => {
-        var getImgRef, imgRefList = [];
-        const listRef = ref(storage, 'images/shop_images');
-        const fileList =  await listAll(listRef);
-        fileList.items.forEach((itemRef) => {
-            getImgRef = ref(storage, itemRef.fullPath);
-            imgRefList.push(getImgRef);
-        })
-        
-        const urls = await multiImage(imgRefList);
-        getImageData(urls);
-    };
-      
-    const multiImage = async (imageFileList) => {
-        let imagesUrlArray = [];
-        for (let i = 0; i < imageFileList.length; i++) {
-            let temp_url_array = {};
-            const imageUrl = await getDownloadURL(imageFileList[i]);
-            temp_url_array.img_name = imageFileList[i].name;
-            temp_url_array.img_url = imageUrl;
-            imagesUrlArray.push(temp_url_array);
-        }
-        return imagesUrlArray;
-    };
-    
-    async function getImageData (urls) {
+
+    async function getImageData () {
         const q = query(collection(db, 'pictures'));
         let temp_data = []; 
         
@@ -66,7 +41,6 @@ function ProductList() {
             }));
             setPicbump(temp_data);
             displayImageData(temp_data);
-            filterImgageData(temp_data, urls); 
         });
     }
     
@@ -85,35 +59,7 @@ function ProductList() {
         handleDispatch(pageBackdrop(false));
         setShowInfo(true);
     }
-    
-    const filterImgageData = (pic, temp_pictures) => {
-        console.log('temp_pictures', temp_pictures)
-        console.log('pic', pic)
-        if (pic && temp_pictures) {
-            let temp = pic.map(pic => { return pic.item.imgurl; });
-            let filtered = temp_pictures.filter(data => !temp.includes(data.img_url));
-            console.log('filtered', filtered) 
-            if (filtered.length > 0) addImages(filtered);
-        }
-    }
-           
-    async function addImages (data) {
-        for (let i = 0; i < data.length; i++) {
-            const docRef = await addDoc(collection(db, 'pictures'), {
-                name: "images",
-                imgurl: data[i].img_url,
-                price: 490,
-                oldprice: 870,
-                customize_button: "Customize",
-                state_button: 'Horizontal',
-                show_state: false,
-                timestamp: serverTimestamp()
-            })
-            if(docRef) {
-            }
-        }
-    }
-    
+
     const handleChange = (e) => {
         setPageNum(e.target.value);
     };  
