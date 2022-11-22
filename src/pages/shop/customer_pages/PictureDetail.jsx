@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Alert, InputLabel, Select, FormControl, MenuItem, Paper, Breadcrumbs, 
+import { Alert, FormControl, MenuItem, Paper, Breadcrumbs, TextField, 
          Box, Grid, Typography, 
        } from "@mui/material";
 import { collection, onSnapshot, query, doc, addDoc, serverTimestamp,  } from "firebase/firestore";
@@ -34,6 +34,7 @@ export default function UploadForm() {
   const { id } = useParams();
   const [schools, setSchools] = useState([]);
   const [sschool, setSschool] = useState("");
+  const [showSschool, setShowSschool] = useState(false);
   const [playername, setPlayername] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
@@ -209,26 +210,20 @@ const onHandleImages = (data) => {
             <Paper variant="outlined">
               <Box width="100%" padding={3}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Select School <span style={{ color: "red" }}>*</span>
-                  </InputLabel>
-                  <Select
-                    fullWidth
-                    className="w-full mb-2"
-                    // size='small'
-                    onChange={(e) => {
-                      setSschool(e.target.value);
-                    }}
-                    value={sschool}
-                    label="School name"
-                    labelId="demo-simple-select-label"
-                  >
-                    {schools.map((e, i) => (
-                      <MenuItem value={e.item.name} key={i}>
-                        {e.item.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <TextField fullWidth type="search" label="Select School" required value={sschool} onChange={(e) => setSschool(e.target.value)} onFocus={() => setShowSschool(true)} onBlur={() => setShowSschool(false)} />
+                  {showSschool && 
+                    <Box position="absolute" width="100%" zIndex="9999" top="60px">
+                      <Paper elevation={6} sx={{maxHeight: "300px", overflowY: "auto"}} >
+                      {
+                        schools.filter(e => e.item.name.toLowerCase().includes(sschool.toLowerCase())).map((e, i) => (
+                          <MenuItem value={e.item.name} key={i} onMouseDown={() => setSschool(e.item.name)}>
+                            {e.item.name}
+                          </MenuItem>
+                        ))
+                      }
+                      </Paper>
+                    </Box>
+                  }
                 </FormControl>
                 <Box mt={1} mb={2}>
                   <Paper variant="outlined">

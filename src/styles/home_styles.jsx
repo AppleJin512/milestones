@@ -273,6 +273,15 @@ const styles = (theme) => {
       top: "25%",
       left: "10%",
       textAlign: "left",
+      [theme.breakpoints.down("xl")]: {
+        width: "40%",
+      },
+      [theme.breakpoints.down("lg")]: {
+        width: "50%",
+      },
+      [theme.breakpoints.down("md")]: {
+        width: "60%",
+      },
       [theme.breakpoints.down("sm")]: {
         left: "30px !important",
         width: "90%",

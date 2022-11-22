@@ -20,7 +20,7 @@ export default function AboutUs(props) {
   const classes = useStyles();
   return (
     <Container className={classes.generalContainer} maxWidth="xl">
-      <Box mb={8} mt={18}>
+      <Box mb={8} mt={6}>
         <Grid container>
           <Grid item xs={12} md={6} sx={{ background: "black" }}>
             <Box

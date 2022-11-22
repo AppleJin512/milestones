@@ -28,7 +28,7 @@ export default function Footer() {
                           <Link to={PAGES.TERMS}><Typography variant='body2' className={classes.footer_menu_item} onClick={(e)=>goBackToTop(e)}>Shipping & Runtime</Typography></Link>
                           <Link to={PAGES.POLICY}><Typography variant='body2' className={classes.footer_menu_item} onClick={(e)=>goBackToTop(e)}>Store Policy</Typography></Link>
                         </Grid> 
-                        <Grid item xl={3} md={5} sm={8} className={classes.footer_form_box}>
+                        <Grid item xl={3} md={3} sm={8} className={classes.footer_form_box}>
                           <Typography variant='body2' className={classes.footer_right_menu_item}>Milestone & Moments</Typography>
                           <Typography variant='body2' className={classes.footer_right_menu_item}>info@milestonemoments.com</Typography>
                         </Grid>

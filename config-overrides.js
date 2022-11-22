@@ -1,7 +1,9 @@
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 const webpack = require("webpack");
 module.exports = function override(config) {
-  const fallback = config.resolve.fallback || {};
+  const fallback = config.resolve.fallback || {
+    fs: false
+  };
   Object.assign(fallback, {
     crypto: require.resolve("crypto-browserify"),
     stream: require.resolve("stream-browserify"),
