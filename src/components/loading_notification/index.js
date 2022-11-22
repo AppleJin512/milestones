@@ -4,7 +4,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-    console.log('state', state)
   return {
     openBackdrop : state.Backdrop,
     percent : state.PercentCounter
@@ -38,18 +37,6 @@ function CircularProgressWithLabel(props) {
 }
 
 function PageBackdrop(props) {
-
-    // const [ progress, setProgress ] = React.useState(0)
-
-//   React.useEffect(() => {
-//     const timer = setInterval(() => {
-//       setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 1));
-//     }, 100);
-//     return () => {
-      
-//       clearInterval(timer);
-//     };
-//   }, []);
 
   return (
     <Backdrop

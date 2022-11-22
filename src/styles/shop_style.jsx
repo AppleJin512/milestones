@@ -249,7 +249,7 @@ const styles = (theme) => {
       padding: "0 !important",
       position: "relative",
     },
-    formButton: {
+      formButton: {
     },
     activeFormButton: {
       backgroundColor: '#0c0145 !important',
@@ -260,6 +260,22 @@ const styles = (theme) => {
         width: '90px !important',
       },
     },
+    select: {
+      height: '25px',
+      fontSize: '13px',
+      paddingTop: '0px',
+      paddingBottom: '0px',
+      paddingLeft: '5px',
+      paddingRight: '20px',
+      marginLeft: '10px',
+      backgroundPosition: 'right 0.2rem center'
+      },
+      ptext: {
+        fontSize: '14px',
+        marginTop: '2px',
+        marginLeft: '7px',
+        marginRight: '7px'
+      }
   };
 };
 

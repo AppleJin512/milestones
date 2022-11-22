@@ -1,44 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Picture from './Picture';
-import { FormControl, Grid, Pagination, Typography, Divider, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { collection, onSnapshot, query } from 'firebase/firestore';
-import { db } from '../../../../firebase';
+import { FormControl, Grid, Pagination, Typography, Divider } from '@mui/material';
+import { collection, onSnapshot, query, serverTimestamp, addDoc } from 'firebase/firestore';
+import { ref, getDownloadURL, listAll,  } from "firebase/storage";
+import { db, storage } from '../../../../firebase';
 import useStyles from '../../../styles/shop_style';
+import { PictureListColorButton } from '../../../styles/customized_components';
 import { useDispatch } from 'react-redux';
 import { pageBackdrop } from '../../../actions/actions';
 
-const styles = {
-    select: {
-        height: '25px',
-        fontSize: '13px',
-        paddingTop: '0px',
-        paddingBottom: '0px',
-        paddingLeft: '5px',
-        paddingRight: '20px',
-        marginLeft: '10px',
-        backgroundPosition: 'right 0.2rem center'
-    },
-    ptext: {
-        fontSize: '14px',
-        marginTop: '2px',
-        marginLeft: '7px',
-        marginRight: '7px'
-    }
-}
-
-const ColorButton = styled(Button)(({ theme }) => ({
-    color: 'white',
-    backgroundColor: ' #f47064',
-    width: '100px',
-    borderRadius: '0px',
-    fontSize: '16px',
-    '&:hover': {
-        backgroundColor: ' #f47064',
-    },
-}));
-
 function ProductList() {
+
     const [ pictures, setPictures ] = useState([]);
     const [ picbump, setPicbump ] = useState([]);
     const [ paginationCount, setPaginationCount ] = useState(0);
@@ -47,27 +19,57 @@ function ProductList() {
     const [ pageid, setPageid ] = useState(1);
     const [ showInfo, setShowInfo ] = useState(false);
     const handleDispatch = useDispatch();
+    const classes = useStyles();
     
     
-    useEffect(() => {
+    useEffect(()=> {
         handleDispatch(pageBackdrop(true));
+        getImageUrls();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+      
+    const getImageUrls = async (imageFileList) => {
+        var getImgRef, imgRefList = [];
+        const listRef = ref(storage, 'images/shop_images');
+        const fileList =  await listAll(listRef);
+        fileList.items.forEach((itemRef) => {
+            getImgRef = ref(storage, itemRef.fullPath);
+            imgRefList.push(getImgRef);
+        })
+        
+        const urls = await multiImage(imgRefList);
+        getImageData(urls);
+    };
+      
+    const multiImage = async (imageFileList) => {
+        let imagesUrlArray = [];
+        for (let i = 0; i < imageFileList.length; i++) {
+            let temp_url_array = {};
+            const imageUrl = await getDownloadURL(imageFileList[i]);
+            temp_url_array.img_name = imageFileList[i].name;
+            temp_url_array.img_url = imageUrl;
+            imagesUrlArray.push(temp_url_array);
+        }
+        return imagesUrlArray;
+    };
+    
+    async function getImageData (urls) {
         const q = query(collection(db, 'pictures'));
         let temp_data = []; 
+        
         onSnapshot(q, (snapshot) => {
             setTotalNum(snapshot.docs.length);
             setPaginationCount(Math.ceil(snapshot.docs.length / pageNum));
             temp_data = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    item: doc.data()
-                })
-            );
-            displayImageData(temp_data);
+                id: doc.id,
+                item: doc.data()
+            }));
             setPicbump(temp_data);
+            displayImageData(temp_data);
+            filterImgageData(temp_data, urls); 
         });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-
+    }
+    
     
     const displayImageData = (data) => {
         setPaginationCount(Math.ceil(data.length / pageNum));
@@ -84,6 +86,34 @@ function ProductList() {
         setShowInfo(true);
     }
     
+    const filterImgageData = (pic, temp_pictures) => {
+        console.log('temp_pictures', temp_pictures)
+        console.log('pic', pic)
+        if (pic && temp_pictures) {
+            let temp = pic.map(pic => { return pic.item.imgurl; });
+            let filtered = temp_pictures.filter(data => !temp.includes(data.img_url));
+            console.log('filtered', filtered) 
+            if (filtered.length > 0) addImages(filtered);
+        }
+    }
+           
+    async function addImages (data) {
+        for (let i = 0; i < data.length; i++) {
+            const docRef = await addDoc(collection(db, 'pictures'), {
+                name: "images",
+                imgurl: data[i].img_url,
+                price: 490,
+                oldprice: 870,
+                customize_button: "Customize",
+                state_button: 'Horizontal',
+                show_state: false,
+                timestamp: serverTimestamp()
+            })
+            if(docRef) {
+            }
+        }
+    }
+    
     const handleChange = (e) => {
         setPageNum(e.target.value);
     };  
@@ -94,20 +124,17 @@ function ProductList() {
         for (let i = 0; i < pageNum; i++) {
             if (picbump[i + (pageid - 1) * pageNum] !== undefined){
                 buf.push(picbump[i + (pageid - 1) * pageNum]);
-            } 
-            
+            }             
         }     
         setPictures(buf);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [picbump, pageid])
-    
-    const classes = useStyles();
 
     return (
         <div className='container mx-auto pt-5'>
             <div className='flex flex-row mt-3 mb-btn-hide px-6 justify-between'>
                 <div>
-                    <ColorButton
+                    <PictureListColorButton
                         className={classes.paginationBtton}
                         onClick={e=>{
                             e.preventDefault();
@@ -115,20 +142,20 @@ function ProductList() {
                         }}
                         
                         disabled={pageid===1?true:false}
-                    >PREVIOUS</ColorButton>
+                    >PREVIOUS</PictureListColorButton>
                 </div>
                 <div>
                     <p className='mt-2'>Page {pageid} of {paginationCount}</p>
                 </div>
                 <div>
-                    <ColorButton
+                    <PictureListColorButton
                         className={classes.paginationBtton}
                         onClick={e=>{
                             e.preventDefault();
                             setPageid(pageid+1);
                         }}
-                        disabled={pageid===paginationCount?true:false}
-                    >NEXT</ColorButton>
+                        disabled={ pageid === paginationCount ? true : false }
+                    >NEXT</PictureListColorButton>
                 </div>
             </div>
 
@@ -136,12 +163,12 @@ function ProductList() {
                 <div className='mt-3 md:px-12 lg:px-24 mb-btn-show'>
                     <Grid container spacing={2} columns={{ xs: 6, sm: 6, md: 12 }} >
                         <Grid item sm={3} md={6} className="flex item-stretch content-center">
-                            <Typography component="p" style={styles.ptext}>FOUND : {totalNum} </Typography> <Divider orientation="vertical" flexItem /> <Typography component="p" style={styles.ptext}> ITEM PER PAGE </Typography>
+                            <Typography component="p" className={classes.ptext}>FOUND : {totalNum} </Typography> <Divider orientation="vertical" flexItem /> <Typography component="p" className={classes.ptext}> ITEM PER PAGE </Typography>
                             <FormControl>
                                 <select
                                     value={pageNum}
                                     onChange={handleChange}
-                                    style={styles.select}
+                                    className={classes.select}
                                 >
                                     <option value={12}>12</option>
                                     <option value={24}>24</option>

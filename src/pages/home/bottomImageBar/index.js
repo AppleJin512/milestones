@@ -2,10 +2,16 @@ import React from 'react';
 import { Grid, Box } from '@mui/material';
 import useStyles from '../../../styles/home_styles';
 import ImageCard from '../imageCard';
+import { useNavigate } from 'react-router-dom';
 
 export default function BottomImageBar(props) {
 
     const classes = useStyles();
+    const history = useNavigate();
+
+    const onGoToOtherPage = (e) => {
+        history('/shop');
+    }
 
     return (
         <Box style={{paddingTop: 37, paddingBottom: 80}}>
@@ -22,6 +28,8 @@ export default function BottomImageBar(props) {
                                 ImageHeading={item.image_heading}
                                 ImageButtonName={item.button_name}
                                 buttonBoxClassName={classes.buttonBox4}
+                                onGoToOtherPage={(e)=>onGoToOtherPage(e)}
+                                id={"shop"}
                             />
                         </Grid>
                     )

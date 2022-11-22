@@ -145,13 +145,32 @@
     height: 250px;
 }
 
-@media(max-width: 425px) {
-    .shopImageBox {
-        margin: 0px 70px;
-    }
+.popper {
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    font-size: 10px;
+    background-color: #0c0145;
+    color: #fff;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -35px;
+    right: 0;
+    border-radius: 5px;
 }
-@media(max-width: 320px) {
-    .shopImageBox {
-        margin: 0px 20px;
-    }
+
+.popper::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 0px;
+    border-style: solid;
+    border-color: #0c0145 transparent transparent transparent;
 }

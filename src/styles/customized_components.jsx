@@ -12,6 +12,17 @@ export const ColorButton = styled(Button)(({ theme }) => ({
       backgroundColor: "#3c336a",
     },
 }));
+
+export const PictureListColorButton = styled(Button)(({ theme }) => ({
+  color: 'white',
+  backgroundColor: ' #f47064',
+  width: '100px',
+  borderRadius: '0px',
+  fontSize: '16px',
+  '&:hover': {
+      backgroundColor: ' #f47064',
+  },
+}));
   
 export  const OutlinedButton = styled(Button)(({ theme }) => ({
     textTransform: "none",

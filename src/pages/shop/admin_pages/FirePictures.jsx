@@ -21,6 +21,7 @@ function App() {
             })))
         })
     }, [name]);
+
     const addTodo = (e) => {
         e.preventDefault();
         addDoc(collection(db, 'pictures'), {
@@ -32,6 +33,7 @@ function App() {
         })
         setName('')
     };
+
     return (
         <div className="App mt-10">
             <h4 className='h4 text-center my-5'> Picture List</h4>

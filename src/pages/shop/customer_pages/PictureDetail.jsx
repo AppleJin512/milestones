@@ -3,9 +3,9 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Alert, InputLabel, Select, FormControl, MenuItem, Paper, Breadcrumbs, 
          Box, Grid, Typography, 
        } from "@mui/material";
-import { collection, onSnapshot, query, doc, addDoc, serverTimestamp, } from "firebase/firestore";
+import { collection, onSnapshot, query, doc, addDoc, serverTimestamp,  } from "firebase/firestore";
 import { db, storage } from "../../../../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
 import isEmail from "validator/lib/isEmail";
 import useStyles from '../../../styles/shop_style';
 import { ColorButton, OutlinedButton, UploadButton, StyledTextField } from "../../../styles/customized_components";
@@ -43,10 +43,14 @@ export default function UploadForm() {
   const [dirty, setDirty] = useState(false);
   const [ activeTypeButton, setActiveTypeButton ] = useState(false);
   const [ activeQualityButton, setActiveQualityButton ] = useState(false);
+  // const [ showNotification, setShowNotification ] = useState(false);
+  // const [ disable, setDisable ] = useState(false);
   const [imageurl, setImageurl] = useState("");
+  const [signurl, setSignurl] = useState("");
   const [ type, setType ] = useState('');
   const [ quality, setQuality ] = useState('');
   const handleDispatch = useDispatch();
+  const [sign, setSign] = useState("");
 
   useEffect(() => {
     const q = query(doc(collection(db, "pictures"), id));
@@ -84,33 +88,56 @@ export default function UploadForm() {
     }
   };
   
-  
   const addData = function () {
+    
     handleDispatch(pageBackdrop(true));
     const sotrageRef1 = ref(storage, `/playerimages/${id}_${image.name}`);
     const uploadTask1 = uploadBytesResumable(sotrageRef1, image);
-    uploadTask1.on(
-        "state_changed",
-        (snapshot) => {
-          const percent = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          handleDispatch(percentCounter(Number(percent)));
-        },
-        (err) => console.log(err),
-        () => {
-            // download url
-            getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
-                setImageurl(url);
 
-            });
-        }
+    uploadTask1.on(
+      "state_changed",
+      (snapshot) => {
+      },
+      (err) => console.log(err),
+      () => {
+          // download url
+          getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
+              setImageurl(url);
+
+          });
+      }
     );
+
+    if (sign === '') {
+        setSignurl('--');
+        return;
+    }
+
+    const sotrageRef2 = ref(storage, `/playersignature/${id}_${sign.name}`);
+    const uploadTask2 = uploadBytesResumable(sotrageRef2, sign);
+
+    uploadTask2.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        handleDispatch(percentCounter(Number(percent)));        
+      },
+      (err) => console.log(err),
+      () => {
+          // download url
+          getDownloadURL(uploadTask2.snapshot.ref).then((url) => {
+              setSignurl(url);
+
+          });
+      }
+    );
+
 }
 
-
 useEffect(() => {
-  if (imageurl !== "") {
+  if (imageurl !== "" && signurl !== "") {
     handleDispatch(pageBackdrop(false));
       addDoc(collection(db, "orders"), {
         picname: pic.name,
@@ -128,18 +155,18 @@ useEffect(() => {
       navigate("/shop/submit");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [imageurl]);
+}, [imageurl, signurl]);
 
-  const onHandleImages = (data) => {
-    if (data === "digital" || data === "plaque") {
-      setActiveTypeButton (data);
-      setType(data);
-    }
-    if (data === "web" || data === "print") {
-      setActiveQualityButton(data);
-      setQuality(data);
-    }
+const onHandleImages = (data) => {
+  if (data === "digital") {
+    setActiveTypeButton (data);
+    setType(data);
   }
+  if (data === "web" || data === "print") {
+    setActiveQualityButton(data);
+    setQuality(data);
+  }
+}
 
   return (
     <div
@@ -221,13 +248,17 @@ useEffect(() => {
                           Digital File
                         </OutlinedButton>
                         <OutlinedButton 
+                          disabled
                           variant="outlined"
                           id="plaque" 
+                          sx={{ position: 'relative' }}
                           onChange={(e)=>setType(e.target.id)} 
                           onClick={(e)=>onHandleImages(e.target.id)}
                           className={ activeTypeButton === "plaque" ? classes.activeFormButton : classes.formButton}
                         >
                           Plaque
+                          <div><div className="popper" id="popper">COMING SOON</div></div>
+                          {/* {showNotification && ( <div><div className="popper" id="popper">COMING SOON</div></div> )} */}
                         </OutlinedButton>
                       </Box>
                     </Box>
@@ -293,6 +324,7 @@ useEffect(() => {
                     >
                       {image !== "" ? image.name : "Upload Player Image*"}
                       <input
+                        multiple
                         hidden
                         accept="image/*"
                         type="file"
@@ -301,6 +333,23 @@ useEffect(() => {
                         }}
                         required
                         value={image.value}
+                      />
+                    </UploadButton>
+                  </Box>
+                  <Box>
+                    <UploadButton
+                      variant="contained"
+                      fullWidth
+                      component="label"
+                    >
+                      {sign !== "" ? sign.name : "Upload Signature*"}
+                      <input
+                        hidden
+                        accept="*"
+                        type="file"
+                        onChange={(e) => {
+                          setSign(e.target.files[0]);
+                        }}
                       />
                     </UploadButton>
                   </Box>
